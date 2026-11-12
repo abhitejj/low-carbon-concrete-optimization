@@ -136,7 +136,7 @@ This reaction lowers pore solution pH below 9.0 \cite{papadakis1991}. When the f
 \subsection{Research Gaps and Problem Formulation}
 Accelerated carbonation tests ($1\%\text{--}4\%\ \mathrm{CO}_2$) alter pore microstructure relative to natural exposure \cite{vu2019, hule2024}. Prior optimizations treat strength or carbon in isolation, omitting reactive transport, entrapped air, and codified bounds.
 
-The $\approx 11$-year Chennai dataset of 45 mixes \cite{hule2024, hule2024mendeley} supports three-tier evidence demarcation, cross-validated air-normalized Bolomey strength, sheltered and unsheltered kinetics with $+1\sigma$ margins, optimization across 18 scenarios, and closed-form durability bounds and shadow prices (Table~\ref{tab:notation}).
+This study uses the $\approx 11$-year Chennai dataset of 45 mixes \cite{hule2024, hule2024mendeley} to examine how clinker replacement can reduce lifecycle carbon while satisfying strength and carbonation-cover constraints. The framework separates field measurements, calibrated models, and literature-based scenarios into three evidence tiers. It combines a cross-validated, air-normalized Bolomey strength model with sheltered and unsheltered carbonation kinetics, including $+1\sigma$ margins, to screen measured mixtures and optimize continuous compositions across 18 scenarios. Closed-form durability bounds and shadow prices then explain how cover and composition limits control the selected mixtures. The notation is summarized in Table~\ref{tab:notation}.
 
 
 
@@ -238,7 +238,9 @@ x_c(t) &= \left[ \frac{2 D_0 C_{\mathrm{ext}} t_0^\alpha}{a (1 - \alpha)} \right
 In sheltered exposure, negligible post-curing hydration aging yields $\alpha \approx 0 \implies n \approx 0.50$ (empirical pooled sheltered fit $n = 0.509$, 95\% CI $[0.458, 0.560]$). Because $n = 0.509$ is slightly above the theoretical bound ($n = (1 - \alpha)/2 \le 0.50$), it is interpreted as $\alpha \approx 0$ within fitting error. For outdoor monsoon exposure, rain-induced late hydration yields $\alpha \approx 0.10 \implies n = 0.452 < 0.50$ (95\% CI $[0.406, 0.498]$).
 
 \subsection{Authoritative Three-Tier Evidence Demarcation}
-Table~\ref{tab:evidence_hierarchy} distinguishes measured data (including Chennai climate records), calibrated strength and kinetic models, and literature-based scenarios and extrapolations. External inputs include EN~16757 uptake \cite{en16757} and EN~206 binder limits \cite{en206}; calibrated kinetic laws have $R^2 > 0.86$.
+The analysis separates its inputs and outputs into three evidence tiers, summarized in Table~\ref{tab:evidence_hierarchy}. Tier 1 contains measured data, including carbonation depths, cylinder strengths, fresh air contents, and Chennai climate records. Tier 2 contains strength and kinetic models calibrated against the experimental cohort; the calibrated kinetic laws have $R^2 > 0.86$. These fitted relationships support interpolation within the observed mixture domain but do not make every optimized composition an experimentally tested mixture.
+
+Tier 3 contains literature-based scenarios and extrapolations, including projected service-life depths and lifecycle carbon estimates. External inputs include EN~16757 uptake \cite{en16757} and EN~206 binder limits \cite{en206}. This distinction is retained when interpreting the optimization results: predicted performance at the design horizon and beyond the tested composition domain remains conditional on the adopted models and assumptions.
 
 \begin{table*}[!t]
 \caption{Authoritative Scientific Demarcation of Experimental and Model Variables Across Three Evidence Tiers}
@@ -496,6 +498,7 @@ Cover: mm; GWP: kg CO$_2$e/m$^3$. Discrete nominal: measured strength, no margin
 \section{Continuous Lifecycle Optimization Formulation}
 
 \subsection{Modeling Assumptions}
+\noindent\begin{minipage}{\columnwidth}
 The optimization model uses six explicit assumptions:
 \begin{enumerate}\setlength{\itemsep}{0.5pt}\setlength{\parskip}{0pt}
     \item[\textbf{A1}] \textbf{1D Fickian Diffusion}: Sharp mineralization front $x_c(t) = k\sqrt{t}$ \cite{papadakis1991}.
@@ -505,6 +508,7 @@ The optimization model uses six explicit assumptions:
     \item[\textbf{A5}] \textbf{Stoichiometric Uptake}: B1 uptake is lower-bounded via Chebyshev's inequality.
     \item[\textbf{A6}] \textbf{Compaction}: Nominal air $V_{\mathrm{air}} = 2.0\%$ via superplasticizer (Appendix~\ref{sec:appendix_standards}).
 \end{enumerate}
+\end{minipage}
 
 \subsection{Decision Vector, Objective, and Numbered Constraints}
 The continuous mix optimization problem is defined by the decision vector 
@@ -576,7 +580,7 @@ In Section~\ref{sec:results}, we link $\mu_{\mathrm{dur}}^*$ directly to the car
 \label{sec:results}
 
 \subsection{Performance Across the Eighteen Design Scenarios}
-Table~\ref{tab:candidates_matrix} summarizes optimal concrete mixtures across all nine structural design cases evaluated under sheltered and unsheltered microclimates (18 total scenarios).
+Table~\ref{tab:candidates_matrix} summarizes optimal concrete mixtures across all nine structural design cases evaluated under sheltered and unsheltered microclimates (18 total scenarios). Each case combines a target strength with a cover depth, allowing the effects of strength demand, cover, and exposure to be compared within the same framework. The table reports discrete screening alongside continuous optimization, with nominal and buffered results shown separately. Discrete winners are selected from measured mixtures, whereas continuous solutions are model-predicted compositions subject to the specified strength, durability, and binder constraints. Appendix~\ref{sec:appendix_candidates} provides the corresponding compositions and screening counts. The following subsections examine the constraints that change the selected mixtures and the carbon savings associated with continuous design.
 
 \subsection{\texorpdfstring{Discrete Screening and the 25\,mm Uncertainty Penalty}{Discrete Screening and the 25 mm Uncertainty Penalty}}
 Table~\ref{tab:candidates_matrix} gives the discrete winners; their controlling boundaries are:
@@ -635,7 +639,7 @@ Table~\ref{tab:candidates_matrix} gives the discrete winners; their controlling 
 \end{table*}
 
 \subsection{Continuous Optimization: Binder Reduction vs.\ SCM Blending}
-Continuous optimization combines binder reduction ($B: 310 \to 280\ \mathrm{kg/m^3}, w/b: 0.50 \to 0.45$, driving $70.8\%\text{--}87.1\% \approx 79\%$ of savings) with SCM blending ($12.9\%\text{--}29.2\%$; bilinear interaction $p > 0.80$). Tables~\ref{tab:candidates_matrix} and~\ref{tab:candidates_details} give all compositions and carbon values; the additional case-specific predictions are:
+Continuous optimization reduces binder content from $B=310$ to $280\ \mathrm{kg/m^3}$ while lowering $w/b$ from $0.50$ to $0.45$ and adjusting the SCM blend. The decomposition assigns $70.8\%\text{--}87.1\%$ of the savings to binder reduction, or approximately $79\%$ overall, and $12.9\%\text{--}29.2\%$ to SCM blending. The bilinear interaction is not statistically significant ($p > 0.80$). Tables~\ref{tab:candidates_matrix} and~\ref{tab:candidates_details} give all compositions and carbon values; the additional case-specific predictions are:
 \begin{enumerate}\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}
     \item \textbf{Tight Cover (25\,mm, Sheltered)}: The nominal optimum gives $f_c=48.0\ \mathrm{MPa}$ and $d_{50}=25.0\ \mathrm{mm}$, saving $19.8\%$ over nominal C39. Under $+15\%$ uncertainty ($d_{50}\le21.74\ \mathrm{mm}$), $f_c=51.4\ \mathrm{MPa}$ and $d_{50}=21.7\ \mathrm{mm}$; saving over buffered C23 is $30.2\%$ ($27.5\%\text{--}28.1\%$ with $1.0\%$ PCE).
     \item \textbf{Standard Cover (30\,mm, Sheltered)}: Nominal predictions are $f_c=43.7\ \mathrm{MPa}$ and $d_{50}=30.0\ \mathrm{mm}$; under uncertainty ($d_{50}\le26.09\ \mathrm{mm}$), they become $f_c=47.0\ \mathrm{MPa}$ and $d_{50}=26.1\ \mathrm{mm}$.
@@ -732,14 +736,13 @@ Allocation-invariant rankings and the uptake offsets support prioritizing clinke
 \section*{Disclosure of AI Assistance}
 ChatGPT (OpenAI) assisted with drafting parts of this research manuscript and refining its wording, clarity, and readability. The author retains responsibility for the manuscript's content and conclusions.
 
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+
 \appendices
 \section{Standards and Test Details}
 \label{sec:appendix_standards}
 \textbf{Codes, Grades \& Protocols:} Exposure follows EN~206 \cite{en206}; the grade mapping, IS~10262 margins, and IS~456 limits are specified in Sections III-B and IV. PPC fly ash follows IS~1489 \cite{is1489}. Phenolphthalein ($1\%$) testing followed RILEM CPC-18 / EN~12390-10 \cite{hule2024}; strength and air-content testing followed EN~12390-3 \cite{en12390} and EN~12350-7 \cite{en12350}, respectively. Storage tests gave $p\ge0.55$; the durations are reported in Section II-A. Module B1 follows EN~16757 (Annex~BB) \cite{en16757} and Lagerblad \cite{lagerblad2005}. Achieving $\mathrm{Air}\le2.0\%$ at $w/b=0.45$ requires PCE, adding $+4.2\text{--}5.3\ \mathrm{kg\ CO_2e/m^3}$ \cite{efca2021}; the qualified carbon comparison is given in Table~\ref{tab:sensitivity_matrix}. No dataset mix used PCE, so this compaction route remains uncalibrated. Data: Mendeley Data \cite{hule2024mendeley} (\cite{hule2024}). Scripts: \url{https://github.com/abhitejj/low-carbon-concrete-optimization}. The study was conducted in \textit{MESS 2026}, under Prof.~R.~N.~Singh and TA Gayathri Vangala.
-
-\bibliographystyle{IEEEtran}
-\bibliography{references}
-
 
 \clearpage
 \onecolumn
