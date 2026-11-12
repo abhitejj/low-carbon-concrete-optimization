@@ -21,15 +21,30 @@ from scipy.optimize import minimize
 import warnings
 warnings.filterwarnings('ignore')
 
-PROJ_DIR = os.path.dirname(os.path.abspath(__file__))
-os.chdir(PROJ_DIR)
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+# Resolve repository root whether run from repo root or scripts/
+if os.path.exists(os.path.join(SCRIPT_DIR, '..', 'data', 'carbonation_master.csv')):
+    REPO_ROOT = os.path.abspath(os.path.join(SCRIPT_DIR, '..'))
+elif os.path.exists(os.path.join(SCRIPT_DIR, 'data', 'carbonation_master.csv')):
+    REPO_ROOT = SCRIPT_DIR
+else:
+    REPO_ROOT = os.path.abspath(os.path.join(SCRIPT_DIR, '..'))
+
+DATA_DIR = os.path.join(REPO_ROOT, 'data')
+RESULTS_DIR = os.path.join(REPO_ROOT, 'results')
+FIGURES_DIR = os.path.join(REPO_ROOT, 'figures')
+os.makedirs(RESULTS_DIR, exist_ok=True)
+os.makedirs(FIGURES_DIR, exist_ok=True)
 
 # -----------------------------------------------------------------------------
 # 1. LOAD MASTER DATA AND RECONCILE MODELS
 # -----------------------------------------------------------------------------
-master_path = 'carbonation_master.csv'
+master_path = os.path.join(DATA_DIR, 'carbonation_master.csv')
 if not os.path.exists(master_path):
-    raise FileNotFoundError(f"Missing required master file: {master_path}")
+    if os.path.exists('carbonation_master.csv'):
+        master_path = 'carbonation_master.csv'
+    else:
+        raise FileNotFoundError(f"Missing required master file: {master_path}")
 
 df_master = pd.read_csv(master_path)
 
@@ -449,8 +464,9 @@ def main():
                 })
 
     df_discrete_results = pd.DataFrame(discrete_records)
-    df_discrete_results.to_csv('discrete_screening_results.csv', index=False)
-    print("Saved complete discrete screening results to: discrete_screening_results.csv")
+    out_discrete = os.path.join(RESULTS_DIR, 'discrete_screening_results.csv')
+    df_discrete_results.to_csv(out_discrete, index=False)
+    print(f"Saved complete discrete screening results to: {out_discrete}")
 
     # -----------------------------------------------------------------------------
     # 4. CONTINUOUS CONSTRAINED OPTIMIZATION VIA SLSQP (MULTI-START)
@@ -494,8 +510,9 @@ def main():
                         cont_results.append(row)
 
     df_cont_results = pd.DataFrame(cont_results)
-    df_cont_results.to_csv('continuous_optimization_results.csv', index=False)
-    print("Saved continuous optimization results to: continuous_optimization_results.csv")
+    out_cont = os.path.join(RESULTS_DIR, 'continuous_optimization_results.csv')
+    df_cont_results.to_csv(out_cont, index=False)
+    print(f"Saved continuous optimization results to: {out_cont}")
 
     # -----------------------------------------------------------------------------
     # 5. SUMMARY OF BEST CANDIDATES FOR ALL 9 CASES (SHELTERED & UNSHELTERED)
@@ -704,8 +721,9 @@ def main():
                 })
 
     df_summary_9cases = pd.DataFrame(summary_9cases)
-    df_summary_9cases.to_csv('summary_best_candidates_9cases.csv', index=False)
-    print("Saved 9-case summary to: summary_best_candidates_9cases.csv")
+    out_summary = os.path.join(RESULTS_DIR, 'summary_best_candidates_9cases.csv')
+    df_summary_9cases.to_csv(out_summary, index=False)
+    print(f"Saved 9-case summary to: {out_summary}")
     print(df_summary_9cases[['Exposure_Condition', 'Target_Grade', 'Cover_mm', 'Discrete_Feasible_Count_Nominal', 'Discrete_Nominal_Best_Mix', 'Discrete_Feasible_Count_Buffered', 'Discrete_Buffered_Best_Mix', 'Continuous_Nominal_Net_GWP', 'Continuous_Unc15_Net_GWP']].to_string(index=False))
 
     # -----------------------------------------------------------------------------
@@ -935,8 +953,9 @@ def main():
         })
 
     df_sens = pd.DataFrame(sens_records)
-    df_sens.to_csv('sensitivity_matrix_results.csv', index=False)
-    print("Saved sensitivity matrix results to: sensitivity_matrix_results.csv")
+    out_sens = os.path.join(RESULTS_DIR, 'sensitivity_matrix_results.csv')
+    df_sens.to_csv(out_sens, index=False)
+    print(f"Saved sensitivity matrix results to: {out_sens}")
 
     # -----------------------------------------------------------------------------
     # EXTRACTION CHECKS: CORRELATION, VIF, NEAREST MIXES, LEVERAGE, ENVELOPING RANGE
@@ -1130,7 +1149,7 @@ def main():
     ax2.grid(True, linestyle='--', alpha=0.3)
 
     plt.tight_layout()
-    fig6_path = 'fig6_pareto_carbon_vs_strength.png'
+    fig6_path = os.path.join(FIGURES_DIR, 'fig6_pareto_carbon_vs_strength.png')
     plt.savefig(fig6_path, dpi=300)
     plt.close()
     print(f"Saved Figure 6 to: {fig6_path}")
@@ -1237,7 +1256,7 @@ def main():
         ax.set_ylabel(r'Net lifecycle carbon (kg CO$_2$e/m$^3$)', fontsize=10)
         ax.margins(x=0.08)
     fig.subplots_adjust(left=0.055, right=0.99, bottom=0.26, top=0.86, wspace=0.40)
-    fig7_path = 'fig7_sensitivity_analysis.png'
+    fig7_path = os.path.join(FIGURES_DIR, 'fig7_sensitivity_analysis.png')
     plt.savefig(fig7_path, dpi=300)
     plt.close()
     print(f"Saved Figure 7 to: {fig7_path}")

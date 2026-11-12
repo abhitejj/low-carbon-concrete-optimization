@@ -6,3 +6,4 @@ __pycache__/
 *.blg
 *.synctex*
 .venv/
+paper/main_ieee.pdf

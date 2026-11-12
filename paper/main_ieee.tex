@@ -62,13 +62,18 @@
 % Allow line breaks in paths and URLs
 \def\UrlBreaks{\do\/\do-\do_}
 
-% Safe figure inclusion macro
+% Safe figure inclusion macro (checks local, ../figures/, and figures/ directories)
+\graphicspath{{../figures/}{./figures/}{./}}
 \newcommand{\safefig}[2][width=\linewidth]{%
   \IfFileExists{#2}{\includegraphics[#1]{#2}}{%
-    \fbox{\begin{minipage}[c][4cm][c]{0.95\linewidth}\centering
-    \textbf{Placeholder: Figure \texttt{#2} not found.}\\
-    \textit{Please ensure \texttt{#2} is uploaded to the project directory.}
-    \end{minipage}}%
+    \IfFileExists{../figures/#2}{\includegraphics[#1]{../figures/#2}}{%
+      \IfFileExists{figures/#2}{\includegraphics[#1]{figures/#2}}{%
+        \fbox{\begin{minipage}[c][4cm][c]{0.95\linewidth}\centering
+        \textbf{Placeholder: Figure \texttt{#2} not found.}\\
+        \textit{Please ensure \texttt{#2} is uploaded to the project directory.}
+        \end{minipage}}%
+      }%
+    }%
   }%
 }
 
