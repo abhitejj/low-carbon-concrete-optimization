@@ -1,0 +1,819 @@
+\documentclass[journal]{IEEEtran}
+
+% Essential packages
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{siunitx}
+\usepackage{microtype}
+\usepackage{cite}
+\usepackage{url}
+\makeatletter
+\@namedef{ver@fixltx2e.sty}{9999/12/31}
+\makeatother
+\usepackage{dblfloatfix}
+\usepackage{etoolbox}
+
+\AtBeginEnvironment{enumerate}{\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\topsep}{0.5pt plus 0.5pt minus 0.5pt}\setlength{\partopsep}{0pt}}
+\AtBeginEnvironment{itemize}{\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}\setlength{\topsep}{0.5pt plus 0.5pt minus 0.5pt}\setlength{\partopsep}{0pt}}
+
+% Modest, consistent display spacing without changing body leading or math size.
+\newcommand{\manuscriptdisplayspacing}{%
+  \setlength{\abovedisplayskip}{4.5pt plus 1pt minus 1pt}%
+  \setlength{\belowdisplayskip}{4.5pt plus 1pt minus 1pt}%
+  \setlength{\abovedisplayshortskip}{3.5pt plus 1pt minus 1pt}%
+  \setlength{\belowdisplayshortskip}{3.5pt plus 1pt minus 1pt}%
+  \setlength{\jot}{4pt}%
+}
+\AtBeginDocument{\manuscriptdisplayspacing}
+
+% IEEEtran bibliography customization
+\def\IEEEbibitemsep{0.5pt plus 0.2pt minus 0.1pt}
+
+\usepackage[hidelinks]{hyperref}
+
+% Custom column types for tabularx
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+
+% Float placement parameters to keep page composition tight and compact
+\renewcommand{\topfraction}{0.95}
+\renewcommand{\bottomfraction}{0.95}
+\renewcommand{\textfraction}{0.05}
+\renewcommand{\floatpagefraction}{0.85}
+\renewcommand{\dbltopfraction}{0.95}
+\renewcommand{\dblfloatpagefraction}{0.85}
+\setcounter{dbltopnumber}{2}
+\setlength{\textfloatsep}{4.0pt plus 1pt minus 1pt}
+\setlength{\floatsep}{3.5pt plus 1pt minus 1pt}
+\setlength{\dbltextfloatsep}{4.0pt plus 1pt minus 1pt}
+\setlength{\dblfloatsep}{3.5pt plus 1pt minus 1pt}
+\setlength{\intextsep}{3.5pt plus 1pt minus 1pt}
+\setlength{\abovecaptionskip}{2.0pt}
+\setlength{\belowcaptionskip}{1.0pt}
+
+% Allow line breaks in paths and URLs
+\def\UrlBreaks{\do\/\do-\do_}
+
+% Safe figure inclusion macro
+\newcommand{\safefig}[2][width=\linewidth]{%
+  \IfFileExists{#2}{\includegraphics[#1]{#2}}{%
+    \fbox{\begin{minipage}[c][4cm][c]{0.95\linewidth}\centering
+    \textbf{Placeholder: Figure \texttt{#2} not found.}\\
+    \textit{Please ensure \texttt{#2} is uploaded to the project directory.}
+    \end{minipage}}%
+  }%
+}
+
+% Redefine abstract and keywords environments so body text is rendered in normal font (not bold)
+\makeatletter
+\renewenvironment{abstract}{%
+  \if@twocolumn
+    \normalfont\@IEEEabskeysecsize\textbf{\textit{\abstractname}:}\hspace{0.5em}%
+  \else
+    \bgroup\par\addvspace{0.5\baselineskip}\centering\@IEEEabskeysecsize\textbf{\abstractname}\par\addvspace{0.5\baselineskip}\egroup\quotation\@IEEEabskeysecsize\mdseries
+  \fi\@IEEEgobbleleadPARNLSP
+}{\relax\ifCLASSOPTIONtechnote\vspace{1.34ex}\else\vspace{0.67ex}\fi
+  \par\if@twocolumn\else\endquotation\fi\normalfont\normalsize}
+
+\renewenvironment{IEEEkeywords}{%
+  \if@twocolumn
+    \normalfont\@IEEEabskeysecsize\textbf{\textit{\IEEEkeywordsname}:}\hspace{0.5em}%
+  \else
+    \bgroup\par\addvspace{0.5\baselineskip}\centering\@IEEEabskeysecsize\textbf{\IEEEkeywordsname}\par\addvspace{0.5\baselineskip}\egroup\quotation\@IEEEabskeysecsize\mdseries
+  \fi\@IEEEgobbleleadPARNLSP
+}{\relax\ifCLASSOPTIONtechnote\vspace{1.34ex}\else\vspace{0.67ex}\fi
+  \par\if@twocolumn\else\endquotation\fi\normalfont\normalsize}
+\makeatother
+
+\title{Constrained Lifecycle Optimization of Low-Carbon Structural Concrete Under 11-Year Natural Carbonation Kinetics and Compressive Strength Demands}
+
+\author{Abhitej~Singh~Bhullar, \IEEEmembership{Roll No.~23110009}\\
+Department of Civil Engineering\\
+\textit{Modeling of Earth System and Sustainability (MESS)}%
+}
+
+\markboth{Modeling of Earth System and Sustainability (MESS), 2026}{Bhullar: Constrained Lifecycle Optimization of Low-Carbon Structural Concrete}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Supplementary cementitious materials reduce emissions but deplete alkaline buffering against carbonation. Using an 11-year dataset of 45 mixtures, we formulate a constrained lifecycle optimization framework. With IS~10262 strength margins, discrete screening selects 50\% slag Mix~C24 at $\ge30\ \mathrm{mm}$ cover under EN~206; IS~456 Severe excludes C24, while C40/50 selects C23. At 25\,mm cover, kinetic uncertainty increases carbon by $16.5\%$. Across 18 scenarios, continuous optimization predicts $4.6\%\text{--}31.2\%$ carbon savings ($1.1\%\text{--}29.0\%$ with PCE). At 30\,mm cover, net global warming potential (GWP) is $133.4\ \mathrm{kg\ CO_2e/m^3}$, saving $14.1\ \mathrm{kg/m^3}$ over C24 ($8.8\text{--}9.9\ \mathrm{kg/m^3}$ with PCE). Uptake offsets 3.8\% to 5.7\% of emissions. No original mixture used PCE; chemical compaction to 2\% air remains uncalibrated.
+\end{abstract}
+
+\begin{IEEEkeywords}
+Low-carbon concrete, natural carbonation kinetics, lifecycle optimization, supplementary cementitious materials, service-life durability, Pareto frontier.
+\end{IEEEkeywords}
+
+\section{Introduction}
+
+\subsection{The Decarbonization Mandate for Structural Concrete}
+Global warming potential (GWP) expresses greenhouse-gas impacts as carbon dioxide equivalent (CO$_2$e).
+
+Annual concrete production exceeds 30 billion tonnes. Clinker calcination ($\mathrm{CaCO}_3 \to \mathrm{CaO} + \mathrm{CO}_2$) and fuel combustion contribute $7\%\text{--}8\%$ of global $\mathrm{CO}_2$ \cite{scrivener2018, monteiro2017}. Standard life-cycle inventories report benchmark OPC emissions of $0.832\text{--}0.840\ \mathrm{kg\ CO_2e/kg}$ \cite{ice3, scrivener2018}. Reported Indian kiln factors span $0.893\text{--}0.940\ \mathrm{kg\ CO_2e/kg}$ ($893\text{--}940\ \mathrm{kg/t}$) in plant audits and cradle-to-gate LCAs \cite{karadumpa2024}.
+
+Supplementary cementitious materials (SCMs), including blast-furnace slag (slag), siliceous fly ash (FA), limestone filler (LS), and volcanic pozzolan (PO), replace clinker with industrial by-products \cite{scrivener2018, lothenbach2011}. Clinker replacement also creates a durability trade-off. Hydration of cement produces Portlandite ($\mathrm{Ca(OH)}_2$), which maintains pore solution $\mathrm{pH} > 12.5$ and passivates steel reinforcement through a microscopic oxide film ($\gamma\text{-}\mathrm{Fe}_2\mathrm{O}_3$). Atmospheric $\mathrm{CO}_2$ diffuses into unsaturated pores and neutralizes this alkaline reserve:
+\begin{equation}
+\mathrm{Ca(OH)}_2 + \mathrm{CO}_2 \to \mathrm{CaCO}_3 + \mathrm{H}_2\mathrm{O}
+\label{eq:carbonation_rxn}
+\end{equation}
+This reaction lowers pore solution pH below 9.0 \cite{papadakis1991}. When the front reaches the reinforcement depth ($d_{\mathrm{cover}}$), steel depassivates, initiating active corrosion and cover spalling \cite{fib34, fib2020}. SCMs contain less reactive $\mathrm{CaO}$ and consume Portlandite pozzolanically. High clinker replacement therefore depletes the alkaline buffering capacity \cite{papadakis1992}.
+
+\subsection{Research Gaps and Problem Formulation}
+Accelerated carbonation tests ($1\%\text{--}4\%\ \mathrm{CO}_2$) alter pore microstructure relative to natural exposure \cite{vu2019, hule2024}. Prior optimizations treat strength or carbon in isolation, omitting reactive transport, entrapped air, and codified bounds.
+
+The $\approx 11$-year Chennai dataset of 45 mixes \cite{hule2024, hule2024mendeley} supports three-tier evidence demarcation, cross-validated air-normalized Bolomey strength, sheltered and unsheltered kinetics with $+1\sigma$ margins, optimization across 18 scenarios, and closed-form durability bounds and shadow prices (Table~\ref{tab:notation}).
+
+
+
+\section{Decade-Long Natural Weathering Dataset and Transport Physics}
+
+\subsection{Experimental Campaign and Field Exposure}
+The experimental campaign comprises 45 concrete mixtures formulated with Portland cement, fly ash ($15\%\text{--}50\%$), slag ($30\%\text{--}50\%$), limestone ($10\%\text{--}20\%$), pozzolan ($15\%\text{--}30\%$), and ternary blends ($30\%\text{--}40\%$), exposed under sheltered and unsheltered conditions in Chennai, India \cite{hule2024, hule2024mendeley}. Water-to-binder ratios span $w/b \in [0.45, 0.60]$ with binder $B \in [220, 400]\ \mathrm{kg/m^3}$ (Mix C1 is the sole mix at $B = 220\ \mathrm{kg/m^3}$, $0\%$ SCM; SCM blends require $B \ge 250\ \mathrm{kg/m^3}$).
+
+Concrete prisms were stored for 7--104 days (mean: 39.8 days; median: 28 days), with no statistically significant effect of storage duration observed ($p > 0.50$; Appendix~\ref{sec:appendix_standards}). The dataset contains 353 carbonation depth measurements across six testing periods spanning 1.0--11.5 years, including 167 sheltered and 186 unsheltered measurements. The final testing period had a mean exposure age of 10.75 years. Fresh concrete air content ranged from 0.9\% to 6.6\%, averaging 2.5\%. The study evaluates three target compressive strengths (30, 35, and 40 MPa) and three concrete cover depths (25, 30, and 35 mm) under both exposure conditions.
+
+\begin{figure*}[!t]
+\centering
+\safefig[width=0.80\textwidth]{fig1_carbonation_kinetics_by_condition.png}
+\caption{Longitudinal natural carbonation kinetics ($d$ vs. $\sqrt{t}$) across 11 years (final epoch 10.1--11.5\,yr, mean 10.75\,yr) of natural field exposure in Chennai, India: (a) Sheltered exposure (indoor/covered, EN 206 class XC3), showing accelerated penetration driven by dry convective $\mathrm{CO}_2$ diffusion; (b) Unsheltered outdoor exposure (rain-exposed, EN 206 class XC4), illustrating substantial carbonation attenuation ($26\%\text{--}30\%$ lower rates), consistent with physical pore-blocking from periodic monsoon wetting and pore condensation.}
+\label{fig:kinetics_condition}
+\end{figure*}
+
+\begin{table}[!t]
+\caption{Mathematical Notation, Parameters, and Physical Units}
+\label{tab:notation}
+\centering
+\scriptsize
+\renewcommand{\arraystretch}{0.55}
+\setlength{\tabcolsep}{2.0pt}
+\begin{tabularx}{\columnwidth}{l X c}
+\toprule
+\textbf{Symbol} & \textbf{Physical Meaning / Definition} & \textbf{Unit} \\
+\midrule
+$\mathbf{x}$ & Decision vector $[w/b, B, x_{\mathrm{FA}}, x_{\mathrm{SG}}, x_{\mathrm{LS}}, x_{\mathrm{PO}}]^T$ & --- \\
+$w/b, B/W$ & Water-to-binder mass ratio and reciprocal $B/W$ & --- \\
+$B$ & Total cementitious binder content & $\mathrm{kg/m^3}$ \\
+$x_j, p_j$ & Mass fraction ($x_j$) and percentage ($p_j = 100 x_j$) of SCM $j$ & ---, \% \\
+$\mathrm{Air}\%$ & Entrapped batch fresh air volume percentage & \% \\
+$f_{c,28}, f_{\mathrm{target}}$ & 28-day cylinder compressive strength and structural demand & $\mathrm{MPa}$ \\
+$\Delta f_{\mathrm{margin}}$ & Codified strength screening buffer ($+8.25\ \mathrm{MPa}$, IS~10262) & $\mathrm{MPa}$ \\
+$x_c(t), k, d_{50}$ & Carbonation depth, rate ($x_c = k\sqrt{t}$), and 50-yr depth & $\mathrm{mm}, \mathrm{mm/yr^{0.5}}$ \\
+$d_{\mathrm{cover}}, d_{50,\mathrm{allow}}$ & Reinforcement cover depth and allowable nominal depth & $\mathrm{mm}$ \\
+$D_{\mathrm{eff}}, a, C_{\mathrm{ext}}$ & Effective $\mathrm{CO}_2$ diffusivity, buffer capacity, ambient $\mathrm{CO}_2$ & $\mathrm{m^2/s}, \mathrm{mol/m^3}$ \\
+$S_w, \phi_p, \phi_g$ & Pore saturation ($0 \le S_w \le 1$), total and gas porosity & --- \\
+$GWP_{\mathrm{net}}, GWP_{\mathrm{A1-A3}}$ & Net lifecycle GWP and cradle-to-gate embodied carbon & $\mathrm{kg\ CO_2e/m^3}$ \\
+$\mathrm{CO}_{2,\mathrm{up}}^{\mathrm{B1}}$ & Use-phase 50-year stoichiometric carbonation uptake & $\mathrm{kg\ CO_2/m^3}$ \\
+$EF_i, EF_{\mathrm{batching}}$ & Material emission factor ($i$) and batching footprint & $\mathrm{kg/kg}, \mathrm{kg/m^3}$ \\
+$\mu_k$ & Karush-Kuhn-Tucker dual multiplier (shadow price) of constraint $k$ & $\mathrm{unit}^{-1}$ \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Earth System Reactive-Transport Governing Equations}
+Concrete is an unsaturated geochemical porous medium undergoing reactive-diffusive exchange with atmospheric $\mathrm{CO}_2$. The 1D conservation law for gaseous $\mathrm{CO}_2$ concentration $C(x,t)$ [$\mathrm{mol/m^3}$] in unsaturated pores is:
+\begin{equation}
+\begin{aligned}
+\frac{\partial (\phi_g C)}{\partial t}
+&= \frac{\partial}{\partial x} \left( D_{\mathrm{eff}}(S_w, \phi_p, T) \frac{\partial C}{\partial x} \right) \\
+&\quad - r_{\mathrm{carb}}
+\end{aligned}
+\label{eq:pde_transport}
+\end{equation}
+where $\phi_g = \phi_p (1 - S_w)$ is gas-filled porosity, $\phi_p$ is total connected porosity, $S_w \in [0,1]$ is liquid saturation, and $r_{\mathrm{carb}}$ is the volumetric mineralization sink ($\mathrm{mol\ CO_2 / (m^3\cdot s)}$).
+
+Under the Millington-Quirk tortuosity-porosity formulation:
+\begin{equation}
+D_{\mathrm{eff}}(S_w) = D_0 \cdot \frac{\phi_g^{10/3}}{\phi_p^2} = D_0 \cdot \phi_p^{4/3} (1 - S_w)^{10/3}
+\label{eq:millington_quirk}
+\end{equation}
+where $D_0 \approx 1.6 \times 10^{-5}\ \mathrm{m^2/s}$ is molecular $\mathrm{CO}_2$ diffusivity in air. In pore water, aqueous diffusivity decreases to $D_{\mathrm{aq}} \approx 1.8 \times 10^{-9}\ \mathrm{m^2/s} \approx 10^{-4} D_0$. In outdoor exposure (XC4), periodic monsoon rain induces capillary saturation ($S_w \to 1$), reducing $D_{\mathrm{eff}} \to 0$ and providing a plausible physical explanation for the $26\%\text{--}30\%$ empirical carbonation rate attenuation observed outdoors relative to sheltered exposure (XC3).
+
+The assumptions are instantaneous reaction-front propagation ($r_{\mathrm{carb}} \to \infty$ at $x = x_c(t)$, M1), quasi-steady pore diffusion ($\partial^2 C / \partial x^2 \approx 0$ in $0 \le x \le x_c$, M2), and boundary values $C(0,t) = C_{\mathrm{ext}}$, $C(x_c, t) = 0$ (M3).
+
+Integrating Laplace's equation under M3 gives a linear concentration gradient $\partial C / \partial x = -C_{\mathrm{ext}} / x_c(t)$. Applying the Stefan mass-conservation condition across the moving interface yields:
+\begin{equation}
+a \cdot \frac{\mathrm{d}x_c}{\mathrm{d}t} = -D_{\mathrm{eff}} \left. \frac{\partial C}{\partial x} \right|_{x = x_c^-} = D_{\mathrm{eff}} \frac{C_{\mathrm{ext}}}{x_c(t)}
+\label{eq:stefan_front}
+\end{equation}
+where $a = [\mathrm{Ca(OH)}_2]_0 + \beta [\mathrm{C}\text{-}\mathrm{S}\text{-}\mathrm{H}]_0$ is total volumetric alkaline buffering capacity ($\mathrm{mol\ CO_2 / m^3}$). Separating variables and integrating from $x_c(0) = 0$:
+\begin{equation}
+\begin{aligned}
+\int_0^{x_c(t)} x' \,\mathrm{d}x'
+&= \frac{D_{\mathrm{eff}} C_{\mathrm{ext}}}{a} \int_0^t \mathrm{d}t' \\
+\implies \frac{1}{2} x_c(t)^2
+&= \frac{D_{\mathrm{eff}} C_{\mathrm{ext}}}{a} t
+\end{aligned}
+\label{eq:stefan_integral}
+\end{equation}
+Taking the square root recovers the exact Fickian rate law:
+\begin{equation}
+x_c(t) = k \sqrt{t}, \quad \text{with } k = \sqrt{\frac{2 D_{\mathrm{eff}} C_{\mathrm{ext}}}{a}}
+\label{eq:fickian_k}
+\end{equation}
+Replacing clinker with SCMs reduces $a$, amplifying $k$. Slag hydration produces secondary C-S-H that retains alkaline reserve and refines pore structure, whereas fly ash pozzolanic reactions consume Portlandite while generating slow early microstructure, explaining why $\gamma_{\mathrm{FA}} / \gamma_{\mathrm{SG}} = 2.17\times$.
+
+When continued hydration causes time-decaying diffusivity $D(t) = D_0 (t_0/t)^\alpha$ ($\alpha \in [0, 1)$), the moving boundary obeys anomalous sub-diffusive power-law penetration:
+\begin{equation}
+\begin{aligned}
+x_c(t) &= \left[ \frac{2 D_0 C_{\mathrm{ext}} t_0^\alpha}{a (1 - \alpha)} \right]^{1/2} t^{(1 - \alpha)/2} \\
+&= k' \, t^n, \quad n = \frac{1 - \alpha}{2}
+\end{aligned}
+\label{eq:power_law}
+\end{equation}
+In sheltered exposure, negligible post-curing hydration aging yields $\alpha \approx 0 \implies n \approx 0.50$ (empirical pooled sheltered fit $n = 0.509$, 95\% CI $[0.458, 0.560]$). Because $n = 0.509$ is slightly above the theoretical bound ($n = (1 - \alpha)/2 \le 0.50$), it is interpreted as $\alpha \approx 0$ within fitting error. For outdoor monsoon exposure, rain-induced late hydration yields $\alpha \approx 0.10 \implies n = 0.452 < 0.50$ (95\% CI $[0.406, 0.498]$).
+
+\subsection{Authoritative Three-Tier Evidence Demarcation}
+Table~\ref{tab:evidence_hierarchy} distinguishes measured data (including Chennai climate records), calibrated strength and kinetic models, and literature-based scenarios and extrapolations. External inputs include EN~16757 uptake \cite{en16757} and EN~206 binder limits \cite{en206}; calibrated kinetic laws have $R^2 > 0.86$.
+
+\begin{table*}[!t]
+\caption{Authoritative Scientific Demarcation of Experimental and Model Variables Across Three Evidence Tiers}
+\label{tab:evidence_hierarchy}
+\centering
+\scriptsize
+\renewcommand{\arraystretch}{0.65}
+\setlength{\tabcolsep}{3.0pt}
+\begin{tabularx}{\textwidth}{L{2.2cm} c L{2.8cm} L{2.8cm} >{\raggedright\arraybackslash}X}
+\toprule
+\textbf{Variable / Quantity} & \textbf{Tier} & \textbf{Empirical Grounding} & \textbf{Model / External Basis} & \textbf{Defensible Scientific Claim} \\
+\midrule
+\textbf{Carbonation Depth ($x_c$)} & \textbf{Tier 1} & 353 phenolphthalein tests, 6 epochs (1.0--11.5\,yr, final epoch mean 10.75\,yr) & Indicator spraying; corner-filtered spatial average \cite{hule2024} & Direct field measurements over $\approx 11$ years in tropical Chennai. \\
+\addlinespace[1pt]
+\textbf{28-Day Strength ($f_{c,28}$)} & \textbf{Tier 1} & 45 cylinder tests per EN~12390-3 & Laboratory testing per standard protocol & Direct cylinder strength; characteristic targets $f_{ck,\mathrm{cyl}} = 30, 35, 40\ \mathrm{MPa}$ map to cube M40, M45, M50 per EN~206 / IS~456. \\
+\addlinespace[1pt]
+\textbf{Fresh Air Content ($\mathrm{Air}\%$)} & \textbf{Tier 1} & Batch air volume ($0.9\%\text{--}6.6\%$, mean $2.5\%$, median $1.8\%$) & Direct pressure gauge measurement & Entrapped air ($0.9\%\text{--}6.6\%$, Mix C24 was $1.6\%$) dictates compressive strength. \\
+\addlinespace[1pt]
+\textbf{Carbonation Rate ($k$)} & \textbf{Tier 2} & OLS origin regression across 45 mixes over $\approx 11$ years & $x_c = k\sqrt{t}$ (curing omitted as $p > 0.50$) & Mean sheltered $k = 3.73$, unsheltered $2.75\ \mathrm{mm/yr}^{0.5}$. Uncertainty margin $+15\%$ matches $+1\sigma$ on $\ln k$. \\
+\addlinespace[1pt]
+\textbf{Strength Model ($f_c^{\mathrm{model}}$)} & \textbf{Tier 2} & Multivariable OLS on $B/W$, $\mathrm{Air}\%$, and SCM fractions & Bolomey solid-to-void ratio with air void volume correction & Sample RMSE $3.78\ \mathrm{MPa}$, $s_e = 4.11\ \mathrm{MPa}$, LOO-CV $4.38\ \mathrm{MPa}$. Buffer $+8.25\ \mathrm{MPa}$ is IS~10262 codified margin ($+4.4\ \mathrm{MPa}$ sensitivity). \\
+\addlinespace[1pt]
+\textbf{Binder Domain ($B$)} & \textbf{Tier 1/3} & Batch records: SCM mixes exist only for $B \in [250, 400]\ \mathrm{kg/m^3}$ & Structural minimum binder rules & Mix C1 is sole mix at $B = 220\ \mathrm{kg/m^3}$ ($0\%$ SCM). Structural baselines enforce $B \ge 280$ (XC3) and $B \ge 300$ (XC4). \\
+\addlinespace[1pt]
+\textbf{50-Year Depth ($d_{50}$)} & \textbf{Tier 3} & Field monitoring terminates at $10.1\text{--}11.5\ \mathrm{yr}$ (mean 10.75\,yr) & Fickian diffusion projection ($t = 50\ \mathrm{years}$) & Extrapolates $\approx 4.3\text{--}5.0\times$ beyond field observations; subject to $+15\%$ kinetic uncertainty. \\
+\addlinespace[1pt]
+\textbf{$\mathrm{CO}_2$ Mass Uptake} & \textbf{Tier 3} & Measured depth $x_c$ and binder content $B$ & Stoichiometric mineralization chemistry & Cohort uptake offsets $3.8\%\text{--}5.7\%$ (baseline $4.7\%$, optimal $4.7\%\text{--}7.7\%$, benchmark $6.4\%\text{--}6.8\%$, $9.1\text{--}9.8\ \mathrm{kg/m^3}$). \\
+\addlinespace[1pt]
+\textbf{Embodied Carbon ($GWP$)} & \textbf{Tier 3} & Mix constituent masses in $\mathrm{kg/m^3}$ & Standard LCI emission factors (ICE v3.0 \cite{ice3}, Scrivener et al. \cite{scrivener2018}) & Cradle-to-gate A1--A3 minus Module B1 uptake. Baseline $0.840\ \mathrm{kg/kg}$ OPC; Indian plants ($0.893\text{--}0.940$ \cite{karadumpa2024}) scale savings. \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+\begin{figure*}[!t]
+\centering
+\safefig[width=0.80\textwidth]{fig4_strength_verification_abrams_air.png}
+\caption{Compressive strength modeling, Bolomey relation verification, and air void normalization across all $N = 45$ concrete mixtures: (a) Apparent breakdown of classical strength vs. $B/W$ relationship prior to air void correction ($R^2 = 0.071$ against $B/W$, or $R^2 = 0.095$ against $w/b$); (b) Air-normalized compressive strength ($f_{c,\mathrm{norm}}$ normalized to $2.0\%$ baseline air content) vs. $B/W$, restoring the fundamental linear Bolomey trend across supplementary cementitious material replacement levels ($0\%\text{--}50\%$).}
+\label{fig:strength_verification}
+\end{figure*}
+
+\section{Predictive Modeling: Strength, Kinetics, and Stoichiometry}
+
+\subsection{Gel-Space Void Ratio and Compressive Strength Formulation}
+Compressive strength in hardened cementitious systems is dictated by paste porosity and solid-to-void ratio. Following Powers' gel-space ratio $\mathcal{X} = V_{\mathrm{gel}} / (V_{\mathrm{gel}} + V_{\mathrm{cap}} + V_{\mathrm{air}})$ and Feret's law:
+\begin{align}
+f_c &= K_F \left( \frac{V_B}{V_B + V_W + V_{\mathrm{air}}} \right)^2 \nonumber \\
+&\approx K_B \left( \frac{B/\rho_B}{B/\rho_B + W/\rho_W + V_{\mathrm{air}}} - c_0 \right)
+\label{eq:feret_bolomey}
+\end{align}
+Linearizing Eq.~\ref{eq:feret_bolomey} with respect to $B/W = 1/(w/b)$ and entrapped air volume $\mathrm{Air}\%$ yields the multivariable Bolomey formulation:
+\begin{align}
+f_{c,28}(\mathbf{x}) ={}& \beta_0 + \beta_{B/W}\left(\frac{B}{W}\right) + \beta_{\mathrm{air}}(\mathrm{Air}\%) \nonumber \\
+&{}+ \beta_{\mathrm{FA}} p_{\mathrm{FA}} + \beta_{\mathrm{SG}} p_{\mathrm{SG}} + \beta_{\mathrm{LS}} p_{\mathrm{LS}} + \beta_{\mathrm{PO}} p_{\mathrm{PO}}
+\label{eq:strength_model}
+\end{align}
+where $p_j$ are SCM mass percentages ($0\%\text{--}50\%$). Uncorrected regression of $f_c$ against $B/W$ shows breakdown ($R^2 = 0.071$, Fig.~\ref{fig:strength_verification}a), as low-$w/b$ batches had high air ($3.9\%\text{--}6.6\%$, mean $5.1\%$; $w/b$--air $r = -0.585$, $B/W$--air $r = 0.642$; VIFs $\le 2.09$, ruling out collinearity). Normalizing for batch air volume restores the linear Bolomey trend ($R^2 = 0.734$, adjusted $R^2 = 0.692$, Fig.~\ref{fig:strength_verification}b). The empirical air penalty ($\beta_{\mathrm{air}} = -4.354\ \mathrm{MPa/\%}$, $p < 10^{-6}$) reflects compaction void spaces. In practice, achieving $\le 2.0\%$ air at $w/b = 0.45$ ($126\ \mathrm{L/m^3}$ water) relies on polycarboxylate ether superplasticizers with defoamers (Appendix~\ref{sec:appendix_standards}).
+
+\subsection{\texorpdfstring{Model Calibration, Leverage, and $+8.25\ \mathrm{MPa}$ Design Buffer}{Model Calibration, Leverage, and +8.25 MPa Design Buffer}}
+Calibration of Eq.~\ref{eq:strength_model} across all $N = 45$ concrete mixtures gives the parameter estimates in Table~\ref{tab:strength_models}. Slag exhibits latent hydraulic reactivity with a modest slope ($\beta_{\mathrm{SG}} = -0.098\ \mathrm{MPa/\%}$, $p = 0.107$, 95\% CI: $[-0.218, +0.022]$), whereas fly ash incurs a severe early penalty ($\beta_{\mathrm{FA}} = -0.421\ \mathrm{MPa/\%}$, $p < 10^{-5}$).
+
+\begin{table}[!t]
+\caption{Air-Normalized Bolomey Compressive Strength Model Parameters and Error Metrics ($N = 45$)}
+\label{tab:strength_models}
+\centering
+\scriptsize
+\renewcommand{\arraystretch}{0.70}
+\begin{tabularx}{\columnwidth}{>{\raggedright\arraybackslash}X C{2.6cm}}
+\toprule
+\textbf{Model Parameter / Metric} & \textbf{Estimate / Value} \\
+\midrule
+Intercept ($\beta_0$) & $-3.698\ \mathrm{MPa}$ \\
+Bolomey Slope ($\beta_{B/W}$) & $+30.959\ \mathrm{MPa}$ \\
+Air Void Penalty ($\beta_{\mathrm{air}}$) & $-4.354\ \mathrm{MPa/\%}$ \\
+Fly Ash Slope ($\beta_{\mathrm{FA}}$) & $-0.421\ \mathrm{MPa/\%}$ \\
+Slag Slope ($\beta_{\mathrm{SG}}$) & $-0.098\ \mathrm{MPa/\%}$ \\
+Limestone Slope ($\beta_{\mathrm{LS}}$) & $-0.467\ \mathrm{MPa/\%}$ \\
+Pozzolan Slope ($\beta_{\mathrm{PO}}$) & $-0.589\ \mathrm{MPa/\%}$ \\
+\midrule
+Coefficient of Determination ($R^2$ / $\text{Adj } R^2$) & $0.734$ / $0.692$ \\
+Sample RMSE ($N = 45$) & $\mathbf{3.78\ \mathrm{MPa}}$ \\
+Residual Standard Error ($s_e$, $\text{df} = 38$) & $\mathbf{4.11\ \mathrm{MPa}}$ \\
+Leave-One-Out CV Error ($\mathrm{RMSE}_{\mathrm{CV}}$) & $\mathbf{4.38\ \mathrm{MPa}}$ ($R^2_{\mathrm{CV}} = 0.644$) \\
+Codified Screening Buffer ($\Delta f_{\mathrm{margin}}$, IS~10262) & $\mathbf{+8.25\ \mathrm{MPa}}$ \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Table~\ref{tab:strength_models} distinguishes sample RMSE ($\text{df}=45$), residual error ($\text{df}=38$), and LOO-CV error computed via diagonal hat-matrix leverage $h_{ii}$. For any out-of-sample design mixture $\mathbf{x}_0$, prediction variance accounts for estimation uncertainty through leverage $h_{00} = \mathbf{x}_0^T (\mathbf{X}^T \mathbf{X})^{-1} \mathbf{x}_0$:
+\begin{equation}
+\begin{aligned}
+s_{\mathrm{pred}}^2(\mathbf{x}_0)
+&= s_e^2 \left( 1 + \mathbf{x}_0^T (\mathbf{X}^T \mathbf{X})^{-1} \mathbf{x}_0 \right) \\
+&= s_e^2 (1 + h_{00})
+\end{aligned}
+\label{eq:pred_variance}
+\end{equation}
+For boundary corners ($h_{00} \approx 0.250 > \bar{h} = 0.156$), $s_{\mathrm{pred}} = s_e\sqrt{1 + h_{00}} = 4.60\ \mathrm{MPa}$ (exact $4.6007\ \mathrm{MPa}$). We enforce a \textbf{codified design screening buffer}:
+\begin{equation}
+\begin{aligned}
+f_{c,28}^{\mathrm{model}}(\mathbf{x})
+&\ge f_{\mathrm{target}} + \Delta f_{\mathrm{margin}} \\
+&= f_{\mathrm{target}} + 8.25\ \mathrm{MPa}
+\end{aligned}
+\label{eq:strength_buffer}
+\end{equation}
+from IS~10262:2019 Table 2 ($s=5.0\ \mathrm{MPa}$ for M30--M60; $+1.65 s = +8.25\ \mathrm{MPa}$ exceeds Table 1's $X = 6.5\ \mathrm{MPa}$). Sensitivities retain $s=4.0\ \mathrm{MPa}$ ($+6.6\ \mathrm{MPa}$) and LOO-CV $+4.4\ \mathrm{MPa}$. Target demands $f_{\mathrm{target}} = 30, 35, 40\ \mathrm{MPa}$ represent cylinder characteristic strengths $f_{ck,\mathrm{cyl}}$ (tested per EN~12390-3), mapping conservatively to cube grades M40, M45, and M50 per EN~206 and IS~456 ($f_{ck,\mathrm{cube}} \approx 1.25 f_{ck,\mathrm{cyl}}$). This yields continuous design thresholds of \textbf{$38.25\ \mathrm{MPa}$} for C30/37, \textbf{$43.25\ \mathrm{MPa}$} for C35/45, and \textbf{$48.25\ \mathrm{MPa}$} for C40/50. For discrete mixtures, nominal screening uses measured $f_{c,\mathrm{meas}} \ge f_{\mathrm{target}}$; buffered screening enforces $f_{c,\mathrm{meas}} \ge f_{\mathrm{target}} + 8.25\ \mathrm{MPa}$.
+
+\subsection{Carbonation Kinetic Modeling and SCM Contrast Ratio}
+Natural carbonation follows Fickian diffusion: $x_c(t) = k\sqrt{t}$, where $k$ is regressed through the origin across the six epochs: $k = \sum (x_{c,i}\sqrt{t_i}) / \sum t_i$ (Fig.~\ref{fig:kinetics_condition}). Multivariable log-linear models capture binder chemistry, $w/b$, and microclimate ($q_j = \mathrm{SCM}_j\% / 10.0$):
+\begin{align}
+\ln k_{\mathrm{sh}} ={}& -1.2939 + 4.0681(w/b) + 0.2525 q_{\mathrm{FA}} \nonumber \\
+&{}+ 0.1161 q_{\mathrm{SG}} + 0.3089 q_{\mathrm{LS}} + 0.2555 q_{\mathrm{PO}}
+\label{eq:kin_sh}
+\end{align}
+($R^2 = 0.876,\; F = 54.92,\; p < 10^{-15}$ for Sheltered XC3), and:
+\begin{align}
+\ln k_{\mathrm{un}} ={}& -1.8130 + 4.4797(w/b) + 0.2482 q_{\mathrm{FA}} \nonumber \\
+&{}+ 0.0986 q_{\mathrm{SG}} + 0.3135 q_{\mathrm{LS}} + 0.2543 q_{\mathrm{PO}}
+\label{eq:kin_un}
+\end{align}
+($R^2 = 0.863,\; F = 49.15,\; p < 10^{-15}$ for Unsheltered XC4). In log space, fly ash exhibits a marginal kinetic slope $\gamma_{\mathrm{FA}} / \gamma_{\mathrm{SG}} = 0.2525 / 0.1161 = \mathbf{2.17\times}$ steeper than slag: $+10\%$ fly ash accelerates carbonation by $+28.7\%$ ($\exp(0.2525) = 1.287$), whereas $+10\%$ slag increases $k$ by only $+12.3\%$ ($\exp(0.1161) = 1.123$).
+
+For sheltered XC3, in-sample $\mathrm{RMSE} = 0.1411$, $s_e = 0.1516$ ($\text{df} = 39$), and $\mathrm{RMSE}_{\mathrm{CV}} = 0.1663$; for unsheltered XC4, $\mathrm{RMSE} = 0.1552$, $s_e = 0.1667$, and $\mathrm{RMSE}_{\mathrm{CV}} = 0.1765$. As an operational benchmark, we enforce a $+1\sigma$ margin ($\exp(0.1411) = 1.1515 \approx 1.15$):
+\begin{equation}
+k_{\mathrm{design}} = \exp(\ln k_{\mathrm{model}} + 0.1411) \approx 1.15\,k_{\mathrm{model}}
+\label{eq:k_margin}
+\end{equation}
+imposing a \textbf{$+15\%$ kinetic uncertainty margin} (one-sided $+1\sigma$ band covering $\approx 84\%$ of normal cases). For 50-year depth $d_{50} = k_{\mathrm{model}}\sqrt{50}$, enforcing $d_{50,\mathrm{design}} \le d_{\mathrm{cover}}$ requires:
+\begin{align}
+d_{50,\mathrm{design}} &= 1.15 \, k_{\mathrm{model}}\sqrt{50} \le d_{\mathrm{cover}} \nonumber \\
+\iff d_{50} &\le \frac{d_{\mathrm{cover}}}{1.15} = d_{50,\mathrm{allow}} = 0.8696 \cdot d_{\mathrm{cover}}
+\label{eq:d50_allow}
+\end{align}
+yielding $d_{50,\mathrm{allow}} = 21.74\ \mathrm{mm}$ for $25\ \mathrm{mm}$ cover, $26.09\ \mathrm{mm}$ for $30\ \mathrm{mm}$, and $30.43\ \mathrm{mm}$ for $35\ \mathrm{mm}$ cover.
+
+\subsection{\texorpdfstring{Stoichiometric $\mathrm{CO}_2$ Mineralization and Chebyshev's Sum Inequality}{Stoichiometric CO2 Mineralization and Chebyshev's Sum Inequality}}
+Atmospheric carbonation mineralizes calcium hydroxide and C-S-H:
+\begin{align}
+\mathrm{Ca(OH)}_2 + \mathrm{CO}_2 &\to \mathrm{CaCO}_3 + \mathrm{H}_2\mathrm{O} \label{eq:rxn1} \\
+\mathrm{C}\text{-}\mathrm{S}\text{-}\mathrm{H} + 2\,\mathrm{CO}_2 &\to \mathrm{SiO}_2 \cdot m\mathrm{H}_2\mathrm{O} + 2\,\mathrm{CaCO}_3 \label{eq:rxn2}
+\end{align}
+Following standardized uptake accounting (EN 16757, Module B1; Appendix~\ref{sec:appendix_standards}) and Lagerblad \cite{lagerblad2005}, volumetric use-phase $\mathrm{CO}_2$ uptake ($\mathrm{kg\ CO_2 / m^3}$) over 50 years is:
+\begin{align}
+\mathrm{CO}_{2,\mathrm{uptake}}^{\mathrm{B1}}(50\mathrm{y}) ={}& x_c(50\mathrm{y}) \cdot 10^{-3} \cdot B \cdot \left(\frac{S}{V}\right) \nonumber \\
+&{}\cdot \Phi_{\mathrm{chem}} \left(\frac{44.01}{56.08}\right)
+\label{eq:uptake}
+\end{align}
+where $S/V = 5.0\ \mathrm{m^2/m^3}$ (standard 200\,mm structural slab exposed on one face) and $\Phi_{\mathrm{chem}} = \sum_i f_i \cdot \mathrm{CaO}_i \cdot \alpha_{c,i}$ (Table~\ref{tab:uptake_scenarios}). For the C35/45 benchmark defined in Section V-D, evaluating Eq.~\ref{eq:uptake} using constituent products ($\Phi_{\mathrm{chem}} = 0.296$) gives $9.75\ \mathrm{kg\ CO_2/m^3}$ ($6.8\%$ offset of $142.5\ \mathrm{kg/m^3}$ embodied GWP, Net GWP $= 132.8\ \mathrm{kg/m^3}$). Decoupled evaluation ($\overline{\mathrm{CaO}} \cdot \bar{\alpha}_c = 0.441 \times 0.626 = 0.276$) gives $9.10\ \mathrm{kg\ CO_2/m^3}$ ($6.4\%$ offset, Net GWP $= 133.4\ \mathrm{kg/m^3}$).
+
+\begin{table}[!t]
+\caption{Stoichiometric Parameters for Bounding $\mathrm{CO}_2$ Uptake Scenarios}
+\label{tab:uptake_scenarios}
+\centering
+\scriptsize
+\renewcommand{\arraystretch}{0.70}
+\begin{tabularx}{\columnwidth}{L{2.4cm} c Y Y Y}
+\toprule
+\textbf{Binder Constituent} & \textbf{Param.} & \textbf{Low} & \textbf{Mid (Base)} & \textbf{High} \\
+\midrule
+\multirow{2}{*}{\textbf{OPC Clinker}} & $\mathrm{CaO}_{\mathrm{OPC}}$ & $0.62$ & $\mathbf{0.65}$ & $0.67$ \\
+ & $\alpha_{c,\mathrm{OPC}}$ & $0.60$ & $\mathbf{0.70}$ & $0.80$ \\
+\addlinespace[1pt]
+\multirow{2}{*}{\textbf{Slag (GGBS)}} & $\mathrm{CaO}_{\mathrm{SG}}$ & $0.36$ & $\mathbf{0.40}$ & $0.44$ \\
+ & $\alpha_{c,\mathrm{SG}}$ & $0.45$ & $\mathbf{0.60}$ & $0.70$ \\
+\addlinespace[1pt]
+\multirow{2}{*}{\textbf{Fly Ash (FA)}} & $\mathrm{CaO}_{\mathrm{FA}}$ & $0.02$ & $\mathbf{0.05}$ & $0.08$ \\
+ & $\alpha_{c,\mathrm{FA}}$ & $0.35$ & $\mathbf{0.50}$ & $0.55$ \\
+\addlinespace[1pt]
+\multirow{2}{*}{\textbf{Limestone (LS)}} & $\mathrm{CaO}_{\mathrm{LS}}$ & $0.00$ & $\mathbf{0.00}$ & $0.00$ \\
+ & $\alpha_{c,\mathrm{LS}}$ & $0.00$ & $\mathbf{0.00}$ & $0.00$ \\
+\addlinespace[1pt]
+\multirow{2}{*}{\textbf{Pozzolan (PO)}} & $\mathrm{CaO}_{\mathrm{PO}}$ & $0.03$ & $\mathbf{0.05}$ & $0.08$ \\
+ & $\alpha_{c,\mathrm{PO}}$ & $0.35$ & $\mathbf{0.50}$ & $0.55$ \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Constituent calcium contents and carbonation reactivities have the same descending order across the primary constituents:
+\begin{align}
+\mathrm{CaO}_{\mathrm{OPC}} &> \mathrm{CaO}_{\mathrm{SG}} > \mathrm{CaO}_{\mathrm{FA}} \ge \mathrm{CaO}_{\mathrm{LS}} \label{eq:cheb_order1} \\
+\alpha_{c,\mathrm{OPC}} &> \alpha_{c,\mathrm{SG}} > \alpha_{c,\mathrm{FA}} \ge \alpha_{c,\mathrm{LS}} \label{eq:cheb_order2}
+\end{align}
+Chebyshev's algebraic sum inequality guarantees that for any convex blending fractions ($f_i \ge 0, \sum f_i = 1$):
+\begin{equation}
+\begin{aligned}
+\sum_{i=1}^m f_i \mathrm{CaO}_i \alpha_{c,i}
+&\ge \left( \sum_{i=1}^m f_i \mathrm{CaO}_i \right) \left( \sum_{i=1}^m f_i \alpha_{c,i} \right) \\
+&= \overline{\mathrm{CaO}} \cdot \bar{\alpha}_c
+\end{aligned}
+\label{eq:chebyshev}
+\end{equation}
+Thus, decoupled evaluation is a guaranteed lower bound within the stoichiometric model, underestimating uptake by $\approx 0.65\ \mathrm{kg/m^3}$ and yielding conservative Net GWP. Cohort uptake offsets $3.8\%\text{--}5.7\%$ of initial GWP (mean $4.7\%$, $11.4\ \mathrm{kg/m^3}$); for optimal mixes, uptake offsets $4.7\%\text{--}7.7\%$ ($6.4\%\text{--}6.8\%$ benchmark).
+
+\begin{table*}[!t]
+\caption{Optimal Mix and Net Carbon Comparison Across 18 Design Scenarios}
+\label{tab:candidates_matrix}
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.0}
+\setlength{\tabcolsep}{2.0pt}
+\begin{minipage}[t]{0.49\textwidth}
+\centering
+\textbf{A. Sheltered (XC3)}\par\vspace{3pt}
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}lc cc cc cc@{}}
+\toprule
+& & \multicolumn{2}{c}{\textbf{Nominal}} & \multicolumn{2}{c}{\textbf{Buffered}} & \multicolumn{2}{c}{\textbf{Continuous}} \\
+\cmidrule(lr){3-4}\cmidrule(lr){5-6}\cmidrule(lr){7-8}
+\textbf{Grade} & \textbf{Cover} & \textbf{Mix} & \textbf{GWP} & \textbf{Mix} & \textbf{GWP} & \textbf{Base} & \textbf{+15\%} \\
+\midrule
+C30/37 & 25 & \textbf{C39} & 169.2 & \textbf{C23} & 197.1 & \textbf{135.7} & \textbf{137.5} \\
+C30/37 & 30 & \textbf{C24} & 147.6 & \textbf{C24} & 147.6 & \textbf{133.4} & \textbf{135.2} \\
+C30/37 & 35 & \textbf{C24} & 147.6 & \textbf{C24} & 147.6 & \textbf{131.6} & \textbf{133.3} \\
+\addlinespace[2pt]
+C35/45 & 25 & \textbf{C39} & 169.2 & \textbf{C23} & 197.1 & \textbf{135.7} & \textbf{137.5} \\
+C35/45 & 30 & \textbf{C24} & 147.6 & \textbf{C24} & 147.6 & \textbf{133.4} & \textbf{135.2} \\
+C35/45 & 35 & \textbf{C24} & 147.6 & \textbf{C24} & 147.6 & \textbf{133.2} & \textbf{133.3} \\
+\addlinespace[2pt]
+C40/50 & 25 & \textbf{C39} & 169.2 & \textbf{C23} & 197.1 & \textbf{135.8} & \textbf{137.5} \\
+C40/50 & 30 & \textbf{C24} & 147.6 & \textbf{C23} & 197.1 & \textbf{135.8} & \textbf{135.8} \\
+C40/50 & 35 & \textbf{C24} & 147.6 & \textbf{C23} & 197.1 & \textbf{135.8} & \textbf{135.8} \\
+\bottomrule
+\end{tabular*}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.49\textwidth}
+\centering
+\textbf{B. Unsheltered (XC4)}\par\vspace{3pt}
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}lc cc cc cc@{}}
+\toprule
+& & \multicolumn{2}{c}{\textbf{Nominal}} & \multicolumn{2}{c}{\textbf{Buffered}} & \multicolumn{2}{c}{\textbf{Continuous}} \\
+\cmidrule(lr){3-4}\cmidrule(lr){5-6}\cmidrule(lr){7-8}
+\textbf{Grade} & \textbf{Cover} & \textbf{Mix} & \textbf{GWP} & \textbf{Mix} & \textbf{GWP} & \textbf{Base} & \textbf{+15\%} \\
+\midrule
+C30/37 & 25 & \textbf{C24} & 151.2 & \textbf{C24} & 151.2 & \textbf{142.2} & \textbf{143.7} \\
+C30/37 & 30 & \textbf{C24} & 151.2 & \textbf{C24} & 151.2 & \textbf{142.0} & \textbf{142.0} \\
+C30/37 & 35 & \textbf{C24} & 151.2 & \textbf{C24} & 151.2 & \textbf{142.0} & \textbf{142.0} \\
+\addlinespace[2pt]
+C35/45 & 25 & \textbf{C24} & 151.2 & \textbf{C24} & 151.2 & \textbf{144.2} & \textbf{144.2} \\
+C35/45 & 30 & \textbf{C24} & 151.2 & \textbf{C24} & 151.2 & \textbf{144.2} & \textbf{144.2} \\
+C35/45 & 35 & \textbf{C24} & 151.2 & \textbf{C24} & 151.2 & \textbf{144.2} & \textbf{144.2} \\
+\addlinespace[2pt]
+C40/50 & 25 & \textbf{C24} & 151.2 & \textbf{C23} & 200.1 & \textbf{146.9} & \textbf{146.9} \\
+C40/50 & 30 & \textbf{C24} & 151.2 & \textbf{C23} & 200.1 & \textbf{146.9} & \textbf{146.9} \\
+C40/50 & 35 & \textbf{C24} & 151.2 & \textbf{C23} & 200.1 & \textbf{146.9} & \textbf{146.9} \\
+\bottomrule
+\end{tabular*}
+\end{minipage}
+\vspace{4pt}
+\begin{minipage}{\textwidth}
+\footnotesize
+Cover: mm; GWP: kg CO$_2$e/m$^3$. Discrete nominal: measured strength, no margin; buffered: +8.25 MPa and +15\% kinetics. Continuous: +8.25 MPa strength with baseline or +15\% kinetics. Compositions, screening counts, conditions, and qualifications: Appendix~\ref{sec:appendix_candidates}.
+\end{minipage}
+\end{table*}
+
+\section{Continuous Lifecycle Optimization Formulation}
+
+\subsection{Modeling Assumptions}
+The optimization model uses six explicit assumptions:
+\begin{enumerate}\setlength{\itemsep}{0.5pt}\setlength{\parskip}{0pt}
+    \item[\textbf{A1}] \textbf{1D Fickian Diffusion}: Sharp mineralization front $x_c(t) = k\sqrt{t}$ \cite{papadakis1991}.
+    \item[\textbf{A2}] \textbf{Decoupled Kinetics}: Rate $\ln k$ is log-linear in $w/b$ and SCM fractions ($\alpha = 0$).
+    \item[\textbf{A3}] \textbf{Bolomey Strength}: 28-d strength is linear in $B/W$, $\mathrm{Air}\%$, and SCM substitution.
+    \item[\textbf{A4}] \textbf{Linear LCI}: Cradle-to-gate carbon (A1--A3) is strictly linear and additive \cite{ice3}.
+    \item[\textbf{A5}] \textbf{Stoichiometric Uptake}: B1 uptake is lower-bounded via Chebyshev's inequality.
+    \item[\textbf{A6}] \textbf{Compaction}: Nominal air $V_{\mathrm{air}} = 2.0\%$ via superplasticizer (Appendix~\ref{sec:appendix_standards}).
+\end{enumerate}
+
+\subsection{Decision Vector, Objective, and Numbered Constraints}
+The continuous mix optimization problem is defined by the decision vector 
+\[
+\mathbf{x} = \left[ w/b, \; B, \; x_{\mathrm{FA}}, \; x_{\mathrm{SG}}, \; x_{\mathrm{LS}}, \; x_{\mathrm{PO}} \right]^T \in \mathbb{R}^6
+\]
+where $x_j \in [0, 1]$ represents the mass fraction of cementitious constituent $j$. Clinker mass fraction is determined by mass conservation $x_{\mathrm{OPC}} = 1.0 - \sum_{j \in \mathrm{SCM}} x_j$. Constituent masses per cubic meter ($m_i = B \cdot x_i$) and batch water ($m_{\mathrm{w}} = B \cdot (w/b)$) satisfy absolute volume conservation:
+\begin{equation}
+m_{\mathrm{agg}} = \left( 1.0 - \sum_i \frac{m_i}{\rho_i} - \frac{m_{\mathrm{w}}}{\rho_{\mathrm{w}}} - V_{\mathrm{air}} \right) \cdot \rho_{\mathrm{agg}}
+\label{eq:agg_balance}
+\end{equation}
+using the following constituent material densities (all in $\mathrm{kg/m^3}$): $\rho_{\mathrm{OPC}} = 3150$, $\rho_{\mathrm{FA}} = 2300$, $\rho_{\mathrm{SG}} = 2900$, $\rho_{\mathrm{LS}} = 2700$, $\rho_{\mathrm{PO}} = 2500$, $\rho_{\mathrm{agg}} = 2650$, and $\rho_{\mathrm{w}} = 1000$.
+
+Initial cradle-to-gate embodied carbon (Modules A1--A3) is:
+\begin{align}
+GWP_{\mathrm{A1-A3}}(\mathbf{x}) ={}& \sum_i m_i EF_i + m_{\mathrm{agg}}EF_{\mathrm{agg}} \nonumber \\
+&{}+ m_{\mathrm{w}}EF_{\mathrm{w}} + EF_{\mathrm{batching}}
+\label{eq:gwp_a1a3}
+\end{align}
+where standard emission factors are $EF_{\mathrm{OPC}}=0.840$, $EF_{\mathrm{FA}}=0.015$, $EF_{\mathrm{SG}}=0.060$, $EF_{\mathrm{LS}}=0.025$, $EF_{\mathrm{PO}}=0.030$, $EF_{\mathrm{agg}}=0.006$, $EF_{\mathrm{w}}=0.0005\ \mathrm{kg\ CO_2e/kg}$ \cite{ice3}, and $EF_{\mathrm{batching}} = 7.5\ \mathrm{kg\ CO_2e/m^3}$.
+
+The 50-year use-phase stoichiometric $\mathrm{CO}_2$ uptake (Module B1) is:
+\begin{align}
+\mathrm{CO}_{2,\mathrm{uptake}}^{\mathrm{B1}}(\mathbf{x}, 50\mathrm{y}) ={}& x_c(50\mathrm{y}, \mathbf{x}) \cdot 10^{-3} \cdot B \cdot \left(\frac{S}{V}\right) \nonumber \\
+&{}\cdot (\overline{\mathrm{CaO}} \cdot \bar{\alpha}_c) \left(\frac{44.01}{56.08}\right)
+\label{eq:uptake_formal}
+\end{align}
+where $S/V = 5.0\ \mathrm{m^2/m^3}$. Net lifecycle GWP subtracts estimated use-phase $\mathrm{CO}_2$ uptake from production emissions:
+\begin{equation}
+\begin{aligned}
+\min_{\mathbf{x}} \; \mathcal{J}(\mathbf{x})
+&= GWP_{\mathrm{A1-A3}}(\mathbf{x}) \\
+&\quad - \mathrm{CO}_{2,\mathrm{uptake}}^{\mathrm{B1}}(\mathbf{x}, 50\mathrm{y})
+\end{aligned}
+\label{eq:nlp_opt}
+\end{equation}
+subject to the following numbered constraints:
+\begin{align}
+g_{\mathrm{str}}(\mathbf{x}) &= (f_{\mathrm{target}} + \Delta f_{\mathrm{margin}}) - f_{c,28}^{\mathrm{model}}(\mathbf{x}) \le 0 \label{eq:cstr_str} \\
+g_{\mathrm{dur}}(\mathbf{x}) &= \gamma_{\mathrm{dur}} \, x_c(50\mathrm{y}, \mathbf{x}) - d_{\mathrm{cover}} \le 0 \label{eq:cstr_dur} \\
+g_{\mathrm{scm}}(\mathbf{x}) &= \sum_{j \in \mathrm{SCM}} x_j - 0.50 \le 0 \label{eq:cstr_scm} \\
+g_{\mathrm{FA}}(\mathbf{x}) &= x_{\mathrm{FA}} - 0.35 \le 0 \label{eq:cstr_fa} \\
+g_{\mathrm{bnd}}(\mathbf{x}) &: w/b \le w/b_{\max}, \nonumber \\
+&\quad B \ge B_{\min}, \; x_j \ge 0 \label{eq:cstr_bounds}
+\end{align}
+where $\gamma_{\mathrm{dur}}=1.0$ (nominal) or $1.15$ (uncertain); strength margins follow Section III-B. Bound limits enforce structural baselines ($B \ge 280\ \mathrm{kg/m^3}$ for XC3; $B \ge 300\ \mathrm{kg/m^3}$ for XC4; $w/b \le 0.55$ for XC3; $w/b \le 0.50$ for XC4).
+
+The Lagrangian associated with Eq.~\ref{eq:nlp_opt} is $\mathcal{L}(\mathbf{x}, \boldsymbol{\mu}) = \mathcal{J}(\mathbf{x}) + \sum_k \mu_k g_k(\mathbf{x})$. At local optimum $\mathbf{x}^*$, the first-order Karush-Kuhn-Tucker (KKT) conditions require:
+\begin{align}
+\nabla_{\mathbf{x}} \mathcal{L}(\mathbf{x}^*, \boldsymbol{\mu}^*) &= \mathbf{0} \label{eq:kkt_stationarity} \\
+&\begin{aligned}
+\mu_k^* g_k(\mathbf{x}^*) = 0, \quad \mu_k^* &\ge 0, \\
+g_k(\mathbf{x}^*) &\le 0 \quad \forall k
+\end{aligned}\label{eq:kkt_complementarity}
+\end{align}
+By the envelope theorem, the dual multiplier $\mu_k^* = -\partial \mathcal{J}^*/\partial b_k$ represents the marginal shadow price of constraint $k$.
+In Section~\ref{sec:results}, we link $\mu_{\mathrm{dur}}^*$ directly to the carbon dividend of structural cover.
+
+\begin{figure*}[!t]
+\centering
+\safefig[width=0.80\textwidth]{fig6_pareto_carbon_vs_strength.png}
+\caption{Multi-objective Pareto frontiers: (a) Discrete mix landscape with buffered strength benchmarks; (b) Continuous Pareto trade-off frontiers across covers ($25, 30, 35\ \mathrm{mm}$) contrasting unconstrained envelope ($B \ge 220\ \mathrm{kg/m^3}$) against structural baseline ($B \ge 280\ \mathrm{kg/m^3}$, XC3).}
+\label{fig:pareto}
+\end{figure*}
+
+\noindent\textbf{Structural Baselines vs.\ Extrapolation:} Codified binder and FA baselines enforce minimum cover ($d_{50} = d_{\mathrm{cover}}$). Section VI discusses paste starvation \cite{neville2011} and unvalidated SCM extrapolation at $B=220\ \mathrm{kg/m^3}$.
+
+\section{Lifecycle Optimization Results and Performance Analysis}
+\label{sec:results}
+
+\subsection{Performance Across the Eighteen Design Scenarios}
+Table~\ref{tab:candidates_matrix} summarizes optimal concrete mixtures across all nine structural design cases evaluated under sheltered and unsheltered microclimates (18 total scenarios).
+
+\subsection{\texorpdfstring{Discrete Screening and the 25\,mm Uncertainty Penalty}{Discrete Screening and the 25 mm Uncertainty Penalty}}
+Table~\ref{tab:candidates_matrix} gives the discrete winners; their controlling boundaries are:
+\begin{enumerate}\setlength{\itemsep}{0.5pt}\setlength{\parskip}{0pt}
+    \item \textbf{The 25\,mm Sheltered Dilemma (Mix C39 vs. C23)}: Nominal C39 clears C40/50 by only $0.4\ \mathrm{MPa}$. Codified margins disqualify it for $\ge\mathrm{C35/45}$, while $+15\%$ kinetics ($1.15\times22.6=26.0>25\ \mathrm{mm}$) eliminates it across all grades. C23 is the unique buffered survivor, imposing a $+16.5\%$ carbon penalty.
+    \item \textbf{Dominance of Mix C24 at $\ge 30\ \mathrm{mm}$ Cover}: C24 dominates C30/37 and C35/45 under nominal, model-buffered and IS~10262 $s=4$ screens ($d_{50}=25.0\ \mathrm{mm}$, $28.8\ \mathrm{mm}$ buffered), saving $25.1\%$ ($49.5\ \mathrm{kg/m^3}$) over C23. EN~206 permits it; IS~456 Severe excludes it. The main $s=5.0\ \mathrm{MPa}$ margin eliminates C24 for C40/50 and promotes C23.
+    \item \textbf{Unsheltered Microclimate Performance}: Rain pore-blocking retards C24 carbonation to $d_{50}=17.52\ \mathrm{mm}$. C24 wins C30/37 and C35/45 across covers; C23 wins C40/50 under $s=5.0\ \mathrm{MPa}$. The $w/b\le0.50$ pool spans 24/26 nominally and 5/26 for C40/50 under joint buffering.
+\end{enumerate}
+
+\begin{table*}[!t]
+\caption{Systematic Sensitivity and Robustness Matrix Across Eight Optimization Dimensions for Benchmark Structural Scenario (Grade C35/45, 30\,mm Cover, Sheltered Exposure)}
+\label{tab:sensitivity_matrix}
+\centering
+\scriptsize
+\renewcommand{\arraystretch}{0.48}
+\setlength{\tabcolsep}{2.5pt}
+\begin{tabularx}{\textwidth}{L{2.3cm} L{2.5cm} L{5.2cm} C{1.6cm} >{\raggedright\arraybackslash}X}
+\toprule
+\textbf{Dimension} & \textbf{Scenario} & \textbf{Optimal Mixture ($w/b, B$, SCM\%)} & \textbf{Net GWP (kg/m$^3$)} & \textbf{Active Constraint} \\
+\midrule
+\multirow{2}{*}{\textbf{Exposure Class*}} & Sheltered Baseline (XC3) & $0.45, 280\ \mathrm{kg}, 24.0\%\ \mathrm{FA}, 26.0\%\ \mathrm{SG}$ & 133.4 & Durability ($d_{50} = 30.0\ \mathrm{mm}$) \\
+ & Unsheltered Code (XC4) & $0.45, 300\ \mathrm{kg}, 25.5\%\ \mathrm{FA}, 24.5\%\ \mathrm{SG}$ & 144.2 & Strength ($f_c = 43.3\ \mathrm{MPa}$) \\
+\addlinespace[0.5pt]
+\multirow{3}{*}{\textbf{SCM Allocation}} & Economic (Baseline) & $0.45, 280\ \mathrm{kg}, 24.0\%\ \mathrm{FA}, 26.0\%\ \mathrm{SG}$ & 133.4 & Durability ($d_{50} = 30.0\ \mathrm{mm}$) \\
+ & Cut-Off (Waste) & $0.51, 280\ \mathrm{kg}, 0.0\%\ \mathrm{FA}, 50.0\%\ \mathrm{SG}$ & 129.4 & Strength ($f_c = 43.3\ \mathrm{MPa}$) \\
+ & Mass Allocation & $0.45, 280\ \mathrm{kg}, 24.0\%\ \mathrm{FA}, 26.0\%\ \mathrm{SG}$ & 138.8 & Durability ($d_{50} = 30.0\ \mathrm{mm}$) \\
+\addlinespace[0.5pt]
+\multirow{3}{*}{\textbf{Kinetic Model}} & Fickian ($n = 0.50$) & $0.45, 280\ \mathrm{kg}, 24.0\%\ \mathrm{FA}, 26.0\%\ \mathrm{SG}$ & 133.4 & Durability ($d_{50} = 30.0\ \mathrm{mm}$) \\
+ & Power-Law ($n = 0.509$) & $0.45, 280\ \mathrm{kg}, 23.0\%\ \mathrm{FA}, 27.0\%\ \mathrm{SG}$ & 133.5 & Durability ($d_{50} = 30.0\ \mathrm{mm}$) \\
+ & Power-Law ($n = 0.452$) & $0.45, 280\ \mathrm{kg}, 25.5\%\ \mathrm{FA}, 24.5\%\ \mathrm{SG}$ & 133.9 & Strength ($f_c = 43.3\ \mathrm{MPa}$) \\
+\addlinespace[0.5pt]
+\multirow{3}{*}{\textbf{$\mathrm{CO}_2$ Uptake}} & Low Uptake & $0.45, 280\ \mathrm{kg}, 24.0\%\ \mathrm{FA}, 26.0\%\ \mathrm{SG}$ & 135.8 & Durability ($d_{50} = 30.0\ \mathrm{mm}$) \\
+ & Midpoint Uptake & $0.45, 280\ \mathrm{kg}, 24.0\%\ \mathrm{FA}, 26.0\%\ \mathrm{SG}$ & 133.4 & Durability ($d_{50} = 30.0\ \mathrm{mm}$) \\
+ & High Uptake & $0.45, 280\ \mathrm{kg}, 24.0\%\ \mathrm{FA}, 26.0\%\ \mathrm{SG}$ & 131.5 & Durability ($d_{50} = 30.0\ \mathrm{mm}$) \\
+\addlinespace[0.5pt]
+\multirow{3}{*}{\textbf{Compaction Air}} & Air = 1.5\% & $0.45, 280\ \mathrm{kg}, 24.0\%\ \mathrm{FA}, 26.0\%\ \mathrm{SG}$ & 133.4 & Durability ($d_{50} = 30.0\ \mathrm{mm}$) \\
+ & Air = 2.0\% (Baseline) & $0.45, 280\ \mathrm{kg}, 24.0\%\ \mathrm{FA}, 26.0\%\ \mathrm{SG}$ & 133.4 & Durability ($d_{50} = 30.0\ \mathrm{mm}$) \\
+ & Air = 3.0\% & $0.45, 280\ \mathrm{kg}, 12.1\%\ \mathrm{FA}, 37.9\%\ \mathrm{SG}$ & 135.5 & Strength ($f_c = 43.3\ \mathrm{MPa}$) \\
+\addlinespace[0.5pt]
+\multirow{2}{*}{\textbf{SCM Rules}} & Empirical (SCM $\le 50\%$) & $0.45, 280\ \mathrm{kg}, 24.0\%\ \mathrm{FA}, 26.0\%\ \mathrm{SG}$ & 133.4 & Durability ($d_{50} = 30.0\ \mathrm{mm}$) \\
+ & Code (FA $\le 35\%$) & $0.45, 280\ \mathrm{kg}, 24.0\%\ \mathrm{FA}, 26.0\%\ \mathrm{SG}$ & 133.4 & Durability ($d_{50} = 30.0\ \mathrm{mm}$) \\
+\addlinespace[0.5pt]
+\multirow{2}{*}{\textbf{Strength Margin}} & IS~10262 Table 2 ($s=5$, $+8.25\ \mathrm{MPa}$, Main) & $0.45, 280\ \mathrm{kg}, 24.0\%\ \mathrm{FA}, 26.0\%\ \mathrm{SG}$ & 133.4 & Durability ($0.48\ \mathrm{MPa}$ slack) \\
+ & Sensitivities: $s=4$ (+6.6), LOO-CV (+4.4), Nom (0) & $0.45, 280\ \mathrm{kg}, 24.0\%\ \mathrm{FA}, 26.0\%\ \mathrm{SG}$ & 133.4 & Durability (slacks $2.13, 4.33, 8.73\ \mathrm{MPa}$) \\
+\addlinespace[0.5pt]
+\multirow{3}{*}{\textbf{Codified Baseline}} & EN~206 Baseline ($B \ge 280\ \mathrm{kg/m^3}$) & $0.45, 280\ \mathrm{kg}, 24.0\%\ \mathrm{FA}, 26.0\%\ \mathrm{SG}$ & 133.4 & Durability ($d_{50} = 30.0\ \mathrm{mm}$) \\
+ & IS~456 Mild ($B \ge 300\ \mathrm{kg/m^3}$) & $0.45, 300\ \mathrm{kg}, 24.0\%\ \mathrm{FA}, 26.0\%\ \mathrm{SG}$ & 141.3 & Durability ($d_{50} = 30.0\ \mathrm{mm}$) \\
+ & IS~456 Severe ($B \ge 320\ \mathrm{kg/m^3}$) & $0.45, 320\ \mathrm{kg}, 24.0\%\ \mathrm{FA}, 26.0\%\ \mathrm{SG}$ & 149.2 & Durability ($d_{50} = 30.0\ \mathrm{mm}$) \\
+\bottomrule
+\end{tabularx}
+\vspace{1pt}
+\begin{minipage}{\textwidth}
+\tiny
+*Outdoor difference ($+10.8\ \mathrm{kg/m^3}$) reflects codified binder ($B=300$ vs $280\ \mathrm{kg/m^3}$) and kinetics. IS~456 Mild ($B \ge 300\ \mathrm{kg/m^3}$) yields $141.3\ \mathrm{kg/m^3}$ ($6.3\ \mathrm{kg/m^3}$ saving over C24); Severe ($B \ge 320\ \mathrm{kg/m^3}$) gives $149.2\ \mathrm{kg/m^3}$ (C24 excluded). At $1.645\sigma$ ($7.20\ \mathrm{MPa}, +26.1\%$ kinetic), C24 reaches $31.6\ \mathrm{mm} > 30\ \mathrm{mm}$ (fails); optimum ($136.3\ \mathrm{kg/m^3}$) saves $60.8\ \mathrm{kg/m^3}$ ($30.8\%$) over survivor C23 ($197.1\ \mathrm{kg/m^3}$). 1.0\% PCE gives Net GWP $137.6\text{--}138.7\ \mathrm{kg/m^3}$ ($8.8\text{--}9.9\ \mathrm{kg/m^3}$ headline saving over un-admixed C24; $14.6\ \mathrm{kg/m^3}$ hypothetical like-for-like).
+\end{minipage}
+\end{table*}
+
+\subsection{Continuous Optimization: Binder Reduction vs.\ SCM Blending}
+Continuous optimization combines binder reduction ($B: 310 \to 280\ \mathrm{kg/m^3}, w/b: 0.50 \to 0.45$, driving $70.8\%\text{--}87.1\% \approx 79\%$ of savings) with SCM blending ($12.9\%\text{--}29.2\%$; bilinear interaction $p > 0.80$). Tables~\ref{tab:candidates_matrix} and~\ref{tab:candidates_details} give all compositions and carbon values; the additional case-specific predictions are:
+\begin{enumerate}\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}
+    \item \textbf{Tight Cover (25\,mm, Sheltered)}: The nominal optimum gives $f_c=48.0\ \mathrm{MPa}$ and $d_{50}=25.0\ \mathrm{mm}$, saving $19.8\%$ over nominal C39. Under $+15\%$ uncertainty ($d_{50}\le21.74\ \mathrm{mm}$), $f_c=51.4\ \mathrm{MPa}$ and $d_{50}=21.7\ \mathrm{mm}$; saving over buffered C23 is $30.2\%$ ($27.5\%\text{--}28.1\%$ with $1.0\%$ PCE).
+    \item \textbf{Standard Cover (30\,mm, Sheltered)}: Nominal predictions are $f_c=43.7\ \mathrm{MPa}$ and $d_{50}=30.0\ \mathrm{mm}$; under uncertainty ($d_{50}\le26.09\ \mathrm{mm}$), they become $f_c=47.0\ \mathrm{MPa}$ and $d_{50}=26.1\ \mathrm{mm}$.
+    \item \textbf{Deep Cover (35\,mm, Sheltered)}: The nominal capped mixture reaches $d_{50}=34.8\ \mathrm{mm}$; unconstrained $35.3\%$ FA + $14.7\%$ SG reaches $35.0\ \mathrm{mm}$ with identical GWP. Under uncertainty, $d_{50}=30.4\ \mathrm{mm}$.
+    \item \textbf{High Strength (30\,mm, C40/50)}: The codified $48.25\ \mathrm{MPa}$ requirement selects the mixture in Table~\ref{tab:candidates_matrix} ($f_c=48.2\ \mathrm{MPa}$, $d_{50}=24.8\ \mathrm{mm}$); $+4.4\ \mathrm{MPa}$ LOO-CV instead gives $22.0\%$ FA + $28.0\%$ SG ($133.8\ \mathrm{kg/m^3}$).
+\end{enumerate}
+
+\subsection{Closed-Form Durability Limits and Kuhn-Tucker Optimality}
+For sheltered C35/45 at 30\,mm cover, nominal ($35.0\ \mathrm{MPa}$), LOO-CV ($39.4\ \mathrm{MPa}$), and codified ($43.25\ \mathrm{MPa}$) thresholds select the same mixture in Table~\ref{tab:candidates_matrix}, whose predicted strength is $43.73\ \mathrm{MPa}$. The propositions explain this invariance on the fixed economic-allocation FA--SG branch; derivations appear in Appendix~\ref{sec:appendix_propositions}.
+
+\noindent\textbf{Proposition 1 (Closed-Form Durability Limit):}
+At $B=280\ \mathrm{kg/m^3}$, $w/b=0.45$, and $p_{\mathrm{SG}}=50-p_{\mathrm{FA}}$, sheltered kinetics reduce to $\ln k_{\mathrm{sh}}=1.1172+0.01364p_{\mathrm{FA}}$. Thus, $d_{50}\le d_{\mathrm{allow}}$ imposes
+\begin{equation}
+p_{\mathrm{FA}}\le p_{\mathrm{dur}}
+=\frac{\ln(d_{\mathrm{allow}}/\sqrt{50})-1.1172}{0.01364}.
+\label{eq:prop_durability_bound}
+\end{equation}
+Strength and the PPC fly ash cap may impose tighter upper bounds; Appendix~\ref{sec:appendix_propositions} evaluates the benchmark.
+
+\noindent\textbf{Proposition 2 (Conditional Boundary Optimality):}
+If the full lifecycle objective decreases throughout the feasible interval on this branch, its minimum occurs at the largest admissible FA content:
+\begin{equation}
+\begin{gathered}
+\frac{\mathrm d\mathcal J}{\mathrm dp_{\mathrm{FA}}}<0
+\ \Longrightarrow\ \\
+p_{\mathrm{FA}}^*=\min\{50,p_{\mathrm{dur}},p_{\mathrm{cap}},p_{\mathrm{str}}\},
+\end{gathered}
+\label{eq:prop_boundary_optimum}
+\end{equation}
+provided the interval is nonempty; $p_{\mathrm{cap}}=35\%$ and $p_{\mathrm{str}}$ are the PPC and strength bounds. Numerical derivatives support decreasing carbon on this economic-allocation branch, where benchmark durability binds and strength and FA caps remain slack. This conditional, fixed-branch result is not a global optimality proof. Cut-Off allocation instead favors $w/b=0.53$ and $0\%$ FA because low slag emissions and greater uptake alter the trade-off.
+
+\noindent\textbf{Local Cover Dividend:}
+With durability in millimetres, the local 30\,mm shadow price is $\mu_{\mathrm{dur}}^*=0.4087\approx0.41\ \mathrm{kg\ CO_2e/(m^3\cdot mm)}$, while $\mu_{\mathrm{str}}^*=0$. For C35/45 under +8.25\,MPa, strength binds before 35\,mm ($25.5\%$ FA, $133.2\ \mathrm{kg/m^3}$). The durability-only 25--35\,mm dividend therefore does not describe that full path (Table~\ref{tab:candidates_matrix}).
+
+\noindent\textbf{Strength Slack and Compaction Limit:}
+Codified strength slack is $0.48\ \mathrm{MPa}$, exhausted at $2.11\%$ air (LOO-CV: $2.99\%$). Batch air ($5.1\%$) incurs a $13.5\ \mathrm{MPa}$ penalty and fails all three thresholds. Appendix~\ref{sec:appendix_propositions} retains the baseline-air calculation.
+
+\begin{figure*}[!t]
+\centering
+\safefig[width=0.80\textwidth]{fig7_sensitivity_analysis.png}
+\caption{Sensitivity sweep for benchmark C35/45 (30\,mm cover): (a) Allocation ($\rho > 0.997$); (b) Kinetics and uptake; (c) Air and strength buffer; and (d) Binder minimum and PPC cap.}
+\label{fig:sensitivity}
+\end{figure*}
+
+\section{Discussion: Pareto Dynamics, Sensitivity, and Structural Caveats}
+
+\subsection{Pareto Dynamics and Sensitivity Sweeps}
+Figure~\ref{fig:pareto} synthesizes the structural Pareto landscape:
+\begin{enumerate}\setlength{\itemsep}{0.5pt}\setlength{\parskip}{0pt}
+    \item \textbf{Discrete Binder Clusters (Fig.~\ref{fig:pareto}a)}: Pure OPC clusters at $204\text{--}354\ \mathrm{kg\ CO_2e/m^3}$; fly ash reaches $140\text{--}180\ \mathrm{kg/m^3}$ but combines strength loss with $d_{50}=45\text{--}62\ \mathrm{mm}$. Slag mixes ($30\%\text{--}50\%$ SG) dominate through moderate strength loss and buffering (Table~\ref{tab:strength_models}).
+    \item \textbf{Cover Depth Carbon Dividend (Fig.~\ref{fig:pareto}b)}: Increasing cover from 25 to 35\,mm lowers the frontier by $4.1\ \mathrm{kg\ CO_2e/m^3}$ through the FA-for-SG substitution quantified in Section V-D and Appendix~\ref{sec:appendix_propositions}.
+    \item \textbf{Structural Binder Penalty}: Enforcing EN~206 XC3 binder ($B \ge 280\ \mathrm{kg/m^3}$) adds $+23.3\text{--}24.1\ \mathrm{kg\ CO_2e/m^3}$ ($+21.5\%$; benchmark $+23.6\ \mathrm{kg/m^3}$) over $B = 220\ \mathrm{kg/m^3}$ to ensure adequate paste lubrication.
+    \item \textbf{Optimization Gap Decomposition}: Continuous frontiers lie $14\text{--}60\ \mathrm{kg/m^3}$ below discrete batches. At sheltered C35/45, 30\,mm cover, C24 ($147.57\ \mathrm{kg/m^3}$) versus the continuous design ($133.45\ \mathrm{kg/m^3}$) gives model-predicted $\Delta GWP_{\mathrm{total}} = \mathbf{14.1\ \mathrm{kg\ CO_2e/m^3}}$, pending batch trials. Decomposition gives: Path~1 (Binder$\to$SCM) $10.0 + 4.1 = \mathbf{14.1\ \mathrm{kg/m^3}}$; Path~2 (SCM$\to$Binder) $1.8 + 12.3 = \mathbf{14.1\ \mathrm{kg/m^3}}$. Binder reduction contributes $\approx 79\%$ and SCM blending $\approx 21\%$. At 25\,mm cover, predicted savings over buffered C23 are $61.4\ \mathrm{kg/m^3}$ ($31.2\%$). The PCE-qualified comparison is retained in Table~\ref{tab:sensitivity_matrix}.
+    \item \textbf{Corner and Boundary Extrapolation}: At the benchmark bounds described in Section V-D, nearest mixes in $(w/b, \mathrm{air}, \mathrm{SCM})$ space are: C28 ($d=1.09$: $w/b=0.50$, air $1.4\%$, $20\%$ FA + $20\%$ SG; $f_c$ $41.1$ vs.\ $41.7\ \mathrm{MPa}$; $k$ $4.374$ vs.\ $4.381$; $d_{50}$ $30.9$ vs.\ $31.0\ \mathrm{mm}$), C23 ($d=2.31$: $w/b=0.50$, air $1.4\%$, $30\%$ SG; $f_c$ $55.7$ vs.\ $49.2\ \mathrm{MPa}$; $k$ $2.534$ vs.\ $2.970$; $d_{50}$ $17.9$ vs.\ $21.0\ \mathrm{mm}$), and C39 ($d=2.33$: $w/b=0.50$, air $1.6\%$, $20\%$ SG + $20\%$ PO; $f_c$ $40.4$ vs.\ $37.5\ \mathrm{MPa}$; $k$ $3.193$ vs.\ $4.408$; $d_{50}$ $22.6$ vs.\ $31.2\ \mathrm{mm}$). Corner leverage $h_{00} = 0.250$ gives $s_{\mathrm{pred}} = s_e\sqrt{1 + 0.250} = 4.60\ \mathrm{MPa}$.
+\end{enumerate}
+
+
+
+Figure~\ref{fig:sensitivity} details the sensitivity sweep for benchmark C35/45 ($d_{\mathrm{cover}} = 30\ \mathrm{mm}$):
+\begin{enumerate}\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}
+    \item \textbf{Allocation (Fig.~\ref{fig:sensitivity}a)}: Mix rankings are invariant ($\rho > 0.997, p < 10^{-40}$) across regimes; clinker ($0.840\ \mathrm{kg/kg}$) dominates SCMs ($14\text{--}56\times$ economic: $\mathrm{EF}_{\mathrm{FA}} = 0.015, \mathrm{EF}_{\mathrm{SG}} = 0.060\ \mathrm{kg/kg}$; $7.0\times$ mass: $0.030, 0.120$; cut-off: $0.005, 0.020$).
+    \item \textbf{Kinetics (Fig.~\ref{fig:sensitivity}b)}: The sheltered power-law ($n = 0.509$) gives a 50-year depth $28.91\ \mathrm{mm}$ vs.\ $26.40\ \mathrm{mm}$ Fickian ($+9.5\%$, mean $\bar{n} = 0.522$). The 10-year anchor shifts depth $+1.5\%$ ($30.44$ vs.\ $30.00\ \mathrm{mm}$), within $+15\%$ margin ($d_{50,\mathrm{allow}} = 26.1\ \mathrm{mm}$). Outdoor $n = 0.452$ gives $d_{50} = 30.0\ \mathrm{mm}$ ($29.7\%$ FA + $20.3\%$ SG).
+    \item \textbf{$\mathrm{CO}_2$ Uptake (Fig.~\ref{fig:sensitivity}b)}: The uptake sweep shifts benchmark Net GWP by $+2.4 / -1.9\ \mathrm{kg/m^3}$; offset ranges are given in Section III-D and Table~\ref{tab:evidence_hierarchy}. High fly ash adds $5.8\ \mathrm{kg/m^3}$ uptake, but carbonation reaches $55\ \mathrm{mm}$ (Mix C35), depassivating $30\ \mathrm{mm}$ cover in $14.8\ \mathrm{yr}$. Clinker reduction dominates uptake.
+    \item \textbf{Compaction (Fig.~\ref{fig:sensitivity}c)}: An air increase of $+1.0\%$ ($3.0\%$) incurs a $-4.35\ \mathrm{MPa}$ penalty, binding strength in Table~\ref{tab:sensitivity_matrix}. Section V-D gives the benchmark air-content failure thresholds.
+    \item \textbf{Fly Ash Cap (Fig.~\ref{fig:sensitivity}d)}: The PPC cap ($\mathrm{FA} \le 35\%$, IS~1489 \cite{is1489}) does not bind indoors ($24.0\%$ FA); at 35\,mm, unconstrained FA reaches $35.3\%$ (Table~\ref{tab:candidates_matrix}), binding weakly ($35.0\%$ FA, $15.0\%$ SG, $131.6\ \mathrm{kg/m^3}$). In XC4, the cap binds: C35/45 at 30\,mm yields $142.3\ \mathrm{kg/m^3}$ ($35.0\%$ FA, $12.9\%$ SG, $2.1\%$ LS); at 25\,mm, carbon is $142.2 \to 142.3\ \mathrm{kg/m^3}$; and C30/37 at 30\,mm shifts $140.0 \to 141.0\ \mathrm{kg/m^3}$.
+\end{enumerate}
+
+\subsection{Structural Baselines and Practical Implementation}
+Optima at $B = 220\ \mathrm{kg/m^3}$ present two challenges:
+(1)~\textbf{Paste Starvation}: neat paste volume is $176.6\ \mathrm{L/m^3}$ ($196.6\ \mathrm{L/m^3}$ with 2\% air), below the $220\text{--}250\ \mathrm{L/m^3}$ limit \cite{neville2011}; codified baselines ($B \ge 280\ \mathrm{kg/m^3}$ sheltered, $B \ge 300\ \mathrm{kg/m^3}$ outdoor) restore paste to $224.8\ \mathrm{L/m^3}$.
+(2)~\textbf{Clinker Depletion}: at $50\%$ SCM, clinker falls to $110\ \mathrm{kg/m^3}$ ($\approx 15\text{--}20\ \mathrm{kg/m^3}$ portlandite reserve \cite{taylor1997, papadakis1992}). Outdoor retardation ($26\%\text{--}30\%$) reflects pore-water blocking ($D_{\mathrm{aq}} \approx 10^{-4} D_{\mathrm{gas}}$). Storage effects were not statistically significant ($p > 0.50$). Slag mixes require 14--28\,d moist curing. Regional kiln factors ($0.893\text{--}0.940\ \mathrm{kg/kg}$ \cite{karadumpa2024}) scale savings proportionally.
+
+\subsection{Limitations}
+Six physical and jurisdictional limitations qualify these findings:
+(a)~Phenolphthalein indicates pH 9--9.5, whereas steel depassivates near pH 10.5--11.5; carbonation fronts may thus precede color change.
+(b)~IS~456 Table 5 rates sheltered concrete as Mild ($B \ge 300\ \mathrm{kg/m^3}, w/b \le 0.55$), where continuous optimum is $141.3\ \mathrm{kg/m^3}$ ($6.3\ \mathrm{kg/m^3}$ saving over C24; $1.8\text{--}2.9\ \mathrm{kg/m^3}$ with PCE), and coastal exposure as Severe ($B \ge 320\ \mathrm{kg/m^3}, w/b \le 0.45$), where C24 is excluded and continuous optimum is $149.2\ \mathrm{kg/m^3}$. Chloride ingress is not modelled.
+(c)~Setting $d_{50} = d_{\mathrm{cover}}$ leaves zero execution tolerance ($5\text{--}10\ \mathrm{mm}$); site cover must therefore be thicker.
+(d)~Curing under 7\,d increases carbonation by 25\%--50\% \cite{parrott1996}, exceeding the +15\% margin.
+(e)~Strength screening uses IS~10262 Table 2 ($+8.25\ \mathrm{MPa}$ for $s=5.0\ \mathrm{MPa}$, leaving $0.48\ \mathrm{MPa}$ slack at benchmark); corner error $s_{\mathrm{pred}} = 4.60\ \mathrm{MPa}$ is within $4.13\ \mathrm{MPa}$ of nominal slack. The kinetic margin uses in-sample RMSE ($0.1411 \to +15\%$). The $1.645\sigma$ sensitivity in Table~\ref{tab:sensitivity_matrix} disqualifies C24 and compares the continuous design with feasible survivor C23.
+(f)~The PCE compaction route remains uncalibrated on the physical cohort (Appendix~\ref{sec:appendix_standards}).
+
+\noindent\textbf{Low-Binder Extrapolation Envelope:} Relaxing $B$ to $220\ \mathrm{kg/m^3}$ yields theoretical Net GWP of $108.3\text{--}111.6\ \mathrm{kg\ CO_2e/m^3}$ indoors and $108.7\text{--}112.4\ \mathrm{kg/m^3}$ outdoors ($\sim17.5\%$ reduction). The domain restriction in Section II-A and paste starvation above make these theoretical bounds rather than validated structural specifications.
+
+
+\section{Conclusions and Structural Specification Guidance}
+Field calibration across 11 years in Chennai supports the discrete screening and continuous design framework. Under EN~206, Mix C24 dominates sheltered cases at $\ge30\ \mathrm{mm}$ cover and outdoor C30/37--C35/45; IS~456 Severe excludes it, and the codified C40/50 strength margin selects C23. At 25\,mm sheltered cover, kinetic uncertainty replaces nominal C39 with buffered C23 and increases carbon by $16.5\%$ (Table~\ref{tab:candidates_matrix}).
+
+Across 18 scenarios, continuous optimization predicts $4.6\%\text{--}31.2\%$ carbon savings ($1.1\%\text{--}29.0\%$ with $1.0\%$ PCE). Binder reduction contributes most of the improvement; SCM blending provides additional savings subject to the strength, durability, and composition limits. The decomposition in Section VI-A remains model-predicted and requires batch trials. Codified binder baselines restore paste lubrication, while the low-binder envelope remains unvalidated.
+
+Quality control remains decisive: strength binds at $3.0\%$ air, and the batch-air penalty fails the targets; Section V-D distinguishes the codified and LOO-CV break-even limits. Reaching $\le2.0\%$ air requires PCE and 14--28\,d moist curing. The PCE route is uncalibrated on the physical cohort.
+
+Allocation-invariant rankings and the uptake offsets support prioritizing clinker displacement over carbonation uptake. This conclusion remains subject to the exposure, strength, cover, allocation, and uncertainty conditions stated above; neither the local analytical branch nor the extrapolated mixes establish global or experimentally validated optimality.
+
+\section*{Disclosure of AI Assistance}
+ChatGPT (OpenAI) assisted with drafting parts of this research manuscript and refining its wording, clarity, and readability. The author retains responsibility for the manuscript's content and conclusions.
+
+\appendices
+\section{Standards and Test Details}
+\label{sec:appendix_standards}
+\textbf{Codes, Grades \& Protocols:} Exposure follows EN~206 \cite{en206}; the grade mapping, IS~10262 margins, and IS~456 limits are specified in Sections III-B and IV. PPC fly ash follows IS~1489 \cite{is1489}. Phenolphthalein ($1\%$) testing followed RILEM CPC-18 / EN~12390-10 \cite{hule2024}; strength and air-content testing followed EN~12390-3 \cite{en12390} and EN~12350-7 \cite{en12350}, respectively. Storage tests gave $p\ge0.55$; the durations are reported in Section II-A. Module B1 follows EN~16757 (Annex~BB) \cite{en16757} and Lagerblad \cite{lagerblad2005}. Achieving $\mathrm{Air}\le2.0\%$ at $w/b=0.45$ requires PCE, adding $+4.2\text{--}5.3\ \mathrm{kg\ CO_2e/m^3}$ \cite{efca2021}; the qualified carbon comparison is given in Table~\ref{tab:sensitivity_matrix}. No dataset mix used PCE, so this compaction route remains uncalibrated. Data: Mendeley Data \cite{hule2024mendeley} (\cite{hule2024}). Scripts: \url{https://github.com/abhitejj/low-carbon-concrete-optimization}. The study was conducted in \textit{MESS 2026}, under Prof.~R.~N.~Singh and TA Gayathri Vangala.
+
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+
+
+\clearpage
+\onecolumn
+\section{Detailed Mixtures, Screening Counts, and Analytical Derivations}
+\label{sec:appendix_candidates}
+\noindent Table~\ref{tab:candidates_details} retains all 18 scenarios from Table~\ref{tab:candidates_matrix}. Targets for C30/37, C35/45, and C40/50 are 30.0, 35.0, and 40.0 MPa. Continuous solutions use $w/b=0.45$ and a +8.25 MPa strength margin. Constituent percentages are by binder mass; a dash denotes zero replacement. Carbon is net GWP in kg CO$_2$e/m$^3$.
+
+\begin{table}[!h]
+\caption{Full Continuous Compositions and Discrete Feasibility Counts}
+\label{tab:candidates_details}
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\setlength{\tabcolsep}{2.5pt}
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lc ccc ccccc ccccc@{}}
+\toprule
+& & \multicolumn{3}{c}{\textbf{Feasible discrete mixes}} & \multicolumn{5}{c}{\textbf{Continuous: baseline kinetics}} & \multicolumn{5}{c}{\textbf{Continuous: +15\% kinetics}} \\
+\cmidrule(lr){3-5}\cmidrule(lr){6-10}\cmidrule(lr){11-15}
+\textbf{Grade} & \textbf{Cover} & \textbf{Nom.} & \textbf{Kin.} & \textbf{Joint} & \textbf{FA} & \textbf{SG} & \textbf{LS} & \textbf{PO} & \textbf{Carbon} & \textbf{FA} & \textbf{SG} & \textbf{LS} & \textbf{PO} & \textbf{Carbon} \\
+& \textbf{(mm)} & & & & \multicolumn{4}{c}{\textbf{(\% binder)}} & & \multicolumn{4}{c}{\textbf{(\% binder)}} & \\
+\midrule
+\multicolumn{15}{l}{\textbf{A. Sheltered (XC3): 35 candidates}} \\
+C30/37 & 25 & 24/35 & 19/35 & 13 & 10.7 & 39.3 & -- & -- & \textbf{135.7} & 0.4 & 49.6 & -- & -- & \textbf{137.5} \\
+C30/37 & 30 & 30/35 & 26/35 & 18 & 24.0 & 26.0 & -- & -- & \textbf{133.4} & 13.8 & 36.2 & -- & -- & \textbf{135.2} \\
+C30/37 & 35 & 32/35 & 30/35 & 19 & 35.0 & 15.0 & -- & -- & \textbf{131.6} & 25.1 & 24.9 & -- & -- & \textbf{133.3} \\
+\addlinespace[2pt]
+C35/45 & 25 & 20/35 & 16/35 & 9 & 10.7 & 39.3 & -- & -- & \textbf{135.7} & 0.4 & 49.6 & -- & -- & \textbf{137.5} \\
+C35/45 & 30 & 23/35 & 21/35 & 11 & 24.0 & 26.0 & -- & -- & \textbf{133.4} & 13.8 & 36.2 & -- & -- & \textbf{135.2} \\
+C35/45 & 35 & 25/35 & 23/35 & 12 & 25.5 & 24.5 & -- & -- & \textbf{133.2} & 25.1 & 24.9 & -- & -- & \textbf{133.3} \\
+\addlinespace[2pt]
+C40/50 & 25 & 15/35 & 12/35 & 5 & 10.1 & 39.9 & -- & -- & \textbf{135.8} & 0.4 & 49.6 & -- & -- & \textbf{137.5} \\
+C40/50 & 30 & 17/35 & 16/35 & 5 & 10.1 & 39.9 & -- & -- & \textbf{135.8} & 10.1 & 39.9 & -- & -- & \textbf{135.8} \\
+C40/50 & 35 & 18/35 & 17/35 & 5 & 10.1 & 39.9 & -- & -- & \textbf{135.8} & 10.1 & 39.9 & -- & -- & \textbf{135.8} \\
+\midrule
+\multicolumn{15}{l}{\textbf{B. Unsheltered (XC4): 26 candidates}} \\
+C30/37 & 25 & 24/26 & 22/26 & 14 & 35.0 & 12.2 & -- & 2.8 & \textbf{142.2} & 28.6 & 21.4 & -- & -- & \textbf{143.7} \\
+C30/37 & 30 & 25/26 & 24/26 & 14 & 35.0 & 9.7 & 5.3 & -- & \textbf{142.0} & 35.0 & 10.4 & 2.5 & 2.1 & \textbf{142.0} \\
+C30/37 & 35 & 25/26 & 25/26 & 14 & 35.0 & 9.7 & 5.3 & -- & \textbf{142.0} & 35.0 & 9.7 & 5.3 & -- & \textbf{142.0} \\
+\addlinespace[2pt]
+C35/45 & 25 & 17/26 & 16/26 & 9 & 25.5 & 24.5 & -- & -- & \textbf{144.2} & 25.5 & 24.5 & -- & -- & \textbf{144.2} \\
+C35/45 & 30 & 17/26 & 17/26 & 9 & 25.5 & 24.5 & -- & -- & \textbf{144.2} & 25.5 & 24.5 & -- & -- & \textbf{144.2} \\
+C35/45 & 35 & 17/26 & 17/26 & 9 & 25.5 & 24.5 & -- & -- & \textbf{144.2} & 25.5 & 24.5 & -- & -- & \textbf{144.2} \\
+\addlinespace[2pt]
+C40/50 & 25 & 13/26 & 13/26 & 5 & 10.1 & 39.9 & -- & -- & \textbf{146.9} & 10.1 & 39.9 & -- & -- & \textbf{146.9} \\
+C40/50 & 30 & 13/26 & 13/26 & 5 & 10.1 & 39.9 & -- & -- & \textbf{146.9} & 10.1 & 39.9 & -- & -- & \textbf{146.9} \\
+C40/50 & 35 & 13/26 & 13/26 & 5 & 10.1 & 39.9 & -- & -- & \textbf{146.9} & 10.1 & 39.9 & -- & -- & \textbf{146.9} \\
+\bottomrule
+\end{tabular*}
+\end{table}
+
+{\footnotesize
+\noindent\textbf{Common exposure conditions.} Exposure bounds follow Section IV. ``Nom.'' counts nominal-strength/nominal-kinetics survivors; ``Kin.'' adds +15\% kinetic uncertainty alone; ``Joint'' applies both strength and kinetic buffering. Counts follow the same grade/cover order as Table~\ref{tab:candidates_matrix}.
+
+\medskip
+\noindent\textbf{Properties of selected discrete mixes.} C39 has measured strength 40.4 MPa and sheltered $d_{50}=22.6$ mm; C24 has measured strength 47.7 MPa, sheltered $d_{50}=25.04$ mm, and unsheltered $d_{50}=17.5$ mm.
+
+\medskip
+\noindent\textbf{Screening and admixture qualifications.} Nominal and buffered screening follow Section III-B. C39 also fails kinetic uncertainty alone ($25.99>25\ \mathrm{mm}$). The original mixes contained no PCE; adding 1.0\% PCE within the optimizer shifts benchmark Net GWP to $137.6\text{--}138.7\ \mathrm{kg/m^3}$. The $14.6\ \mathrm{kg/m^3}$ saving applies only to hypothetical identical PCE addition to C24, which requires none.
+
+}
+
+
+\subsection{Derivations for Closed-Form Durability and Boundary Optimality}
+\label{sec:appendix_propositions}
+{\footnotesize
+\noindent\textbf{Durability reduction.} Substitution into Eq.~\ref{eq:kin_sh} gives 
+\[
+\begin{aligned}
+\ln k_{\mathrm{sh}}&=-1.2939+4.0681(0.45)+0.02525p_{\mathrm{FA}}+0.01161(50-p_{\mathrm{FA}}) \\
+&=1.1172+0.01364p_{\mathrm{FA}}.
+\end{aligned}
+\]
+Enforcing $\ln k_{\mathrm{sh}}\le\ln(d_{\mathrm{allow}}/\sqrt{50})$ proves Proposition~1. At 30\,mm, $\ln(30/\sqrt{50})=1.4452$ gives $24.04\%$ FA and $25.96\%$ SG. Durability limits are $10.7\%$ FA at 25\,mm, $13.8\%$ at $26.09\ \mathrm{mm}$ (+15\% kinetics at 30\,mm cover), and $35.3\%$ at 35\,mm, reduced to $35.0\%$ by the PPC cap; strength may impose a tighter limit.
+
+\medskip
+\noindent\textbf{Objective slope and endpoint argument.} Under economic allocation, the binder slope is $\frac{B}{100}(EF_{\mathrm{FA}}-EF_{\mathrm{SG}})=-0.126\ \mathrm{kg\ CO_2e/(m^3\cdot\%FA)}$. With $\rho_{\mathrm{FA}}=2300<\rho_{\mathrm{SG}}=2900\ \mathrm{kg/m^3}$, aggregate displacement gives an embodied slope of $-0.130$; the benchmark uptake slope is $+0.037$, giving $\mathrm d\mathcal J/\mathrm dp_{\mathrm{FA}}=-0.167$ in the same units. Derivatives at $p_{\mathrm{FA}}=0,10,24.04,40,50\%$ are $-0.174,-0.172,-0.167,-0.158,-0.149$, respectively. These samples support monotonicity but do not prove its sign between samples. Conditional on a negative derivative throughout the feasible interval, increasing FA lowers $\mathcal J$ until durability, strength, or the composition cap binds, proving Proposition~2 on this fixed branch. Clinker emissions ($0.840\ \mathrm{kg/kg}$) exceed FA and SG ($0.015$ and $0.060$); this economic-allocation ordering alone does not prove global optimality.
+
+\medskip
+\noindent\textbf{Cover dividend and compaction arithmetic.} Where durability controls, $\mathrm dp_{\mathrm{FA}}^*/\mathrm dd_{\mathrm{allow}}=1/(0.01364d_{\mathrm{allow}})$ and the physical carbon dividend is $-(\mathrm d\mathcal J/\mathrm dp_{\mathrm{FA}})/(0.01364d_{\mathrm{allow}})$. At 30\,mm, $0.1672/(0.01364\times30)=0.4087\ \mathrm{kg\ CO_2e/(m^3\cdot mm)}$. KKT multiplier values depend on constraint scaling. The durability-controlled 25--35\,mm branch gives $(135.7-131.6)/10=0.41$, with interval slopes $0.46$ (25--30\,mm) and $0.36$ (30--35\,mm). These branch values apply while strength remains slack, as for C30/37; they are not the complete codified C35/45 path, which reaches $133.2\ \mathrm{kg/m^3}$ at 35\,mm. Benchmark strength slacks are $43.73-43.25=0.48\ \mathrm{MPa}$ codified, $4.33\ \mathrm{MPa}$ LOO-CV, and $8.73\ \mathrm{MPa}$ nominal. Break-even air is $2.0\%+0.48/4.354\approx2.11\%$ codified and $2.99\%\approx3.0\%$ LOO-CV.
+}
+
+\end{document}
