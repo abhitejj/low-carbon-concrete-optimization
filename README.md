@@ -129,4 +129,4 @@ chmod +x compile.sh
 ## Data Attribution & Acknowledgments
 
 * **Experimental Dataset:** The 11-year tropical carbonation and strength dataset is from Hule et al. (2024), Mendeley Data, DOI: [10.17632/gkcf2z4ts5.1](https://doi.org/10.17632/gkcf2z4ts5.1) (accompanying paper in *Data in Brief*, [10.1016/j.dib.2024.111006](https://doi.org/10.1016/j.dib.2024.111006)).
-* **Course Context:** Department of Civil Engineering, course *Modeling of Earth System and Sustainability (MESS)*, under Prof. R. N. Singh and TA Gayathri Vangala.
+* **Course Context:** EH 605: *Modeling of Earth System and Sustainability (MESS)*, under Prof. R. N. Singh and TA Gayathri Vangala.
