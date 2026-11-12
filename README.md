@@ -2,7 +2,7 @@
 
 Lifecycle optimization framework for structural concrete mix design, balancing carbon reduction, compressive strength requirements, and long-term natural carbonation resistance.
 
-Developed for the course **Modeling of Earth System and Sustainability (MESS)**, Department of Civil Engineering.
+Developed for the course **Modeling of Earth System and Sustainability (MESS)**.
 
 ---
 
