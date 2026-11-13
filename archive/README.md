@@ -1,6 +1,6 @@
 # Supporting project archive
 
-This archive preserves original data, exploratory analysis, and supporting notes from the former `revision` folder. Use the repository's
+This archive preserves original data and exploratory analysis from the former `revision` folder. Use the repository's
 main `paper/`, `scripts/`, `data/`, and `results/` folders for the final manuscript
 and current analysis. Archived calculations and claims can differ from the final
 paper; they are retained for provenance, not as replacements for final results.
@@ -9,7 +9,6 @@ paper; they are retained for provenance, not as replacements for final results.
 | --- | --- |
 | `data/` | Original experimental Excel workbook, including the source mix and carbonation measurements. Source attribution is in the main repository README. |
 | `analysis/` | Three distinct analysis notebooks, original preprocessing and inspection scripts, historical optimization and verification scripts, intermediate CSV files, and the editable long-form workbook. |
-| `notes/` | Methods, audit, evidence, external review, and project context notes. These documents describe earlier stages of the work. |
 
 ## Using historical analysis
 
